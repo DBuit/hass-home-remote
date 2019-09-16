@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from "../service/settings.service";
-import { ToastController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
@@ -17,7 +17,7 @@ export class SettingsTabPage {
   configurationString: string;
   configurationUrl: string;
 
-  constructor(public settingsService: SettingsService, public router: Router, public toastController: ToastController, private http: HttpClient) { }
+  constructor(public settingsService: SettingsService, public router: Router, public toastController: ToastController, private http: HttpClient, public loadingController: LoadingController) { }
 
   async ngOnInit() {
     this.url = await this.settingsService.get('url');
@@ -33,19 +33,20 @@ export class SettingsTabPage {
 
 
   async saveSettings() {
-
-      console.log(this.url);
-      console.log(this.token);
-      console.log(this.configurationUrl);
-      this.settingsService.set('url', this.url);
-      this.settingsService.set('token', this.token);
-      this.settingsService.set('configurationUrl', this.configurationUrl);
+      let loading = await this.loadingController.create({
+        message: 'Saving settings...'
+      });
+      await loading.present();
+      await this.settingsService.set('url', this.url);
+      await this.settingsService.set('token', this.token);
+      await this.settingsService.set('configurationUrl', this.configurationUrl);
 
       const toast = await this.toastController.create({
-        message: 'Your settings have been saved.',
+        message: 'Settings saved.',
         duration: 2000
       });
-      toast.present();
+      await loading.dismiss();
+      await toast.present();
   }
 
   async getConfiguration() {
@@ -54,16 +55,16 @@ export class SettingsTabPage {
     if(this.configurationUrl) {
       //GET JSON from url
 
+      let loading = await this.loadingController.create({
+        message: 'Downloading configuration file...'
+      });
+      await loading.present();
       this.download(this.configurationUrl).subscribe((data: any) => {
-
-        console.log(data);
-
         this.configuration = data;
         this.settingsService.set('configuration', this.configuration);
         this.configurationString = JSON.stringify(this.configuration, undefined, 4);
-
+        loading.dismiss();
         this.toast('Configuration saved');
-        // this.router.navigate(['/']);
 
       }, (error) => {
         this.toast('Error retrieving configuration: '+error.message);
@@ -92,7 +93,7 @@ export class SettingsTabPage {
       message: message,
       duration: 2000
     });
-    toast.present();
+    await toast.present();
   }
 
 }
