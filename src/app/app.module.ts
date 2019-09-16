@@ -15,16 +15,17 @@ import { IonicStorageModule } from '@ionic/storage';
 
 //Modals
 import { BrightnessModalPage } from './modal/brightness.modal.page';
-
+import { BlindModalPage } from './modal/blind.modal.page';
 
 @NgModule({
-  declarations: [AppComponent, BrightnessModalPage],
-  entryComponents: [BrightnessModalPage],
+  declarations: [AppComponent, BrightnessModalPage, BlindModalPage],
+  entryComponents: [BrightnessModalPage, BlindModalPage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   providers: [
     StatusBar,
     SplashScreen,
     BrightnessModalPage,
+    BlindModalPage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -13,8 +13,7 @@
                         <div class="homekit-card">
 
                             <ng-template ngFor let-entity [ngForOf]="entityrow">
-
-                                <ng-template [ngIf]="this.entities[entity.entity] && this.entities[entity.entity].state != 'unavailable'">
+                                <ng-template [ngIf]="(this.entities[entity.entity] && this.entities[entity.entity].state != 'unavailable') || entity.type == 'blinds'">
                                     <ng-template [ngIf]="entity.type == 'light'">
 
                                         <!-- Light -->
@@ -24,7 +23,7 @@
                                                 <span class="name" [class.on]="this.entities[entity.entity].state == 'on'">{{ entity.name }}</span>
                                                 <span class="state" [class.on]="this.entities[entity.entity].state == 'on'">{{ this.entities[entity.entity].state }}</span>
                                                 <span class="value" [class.on]="this.entities[entity.entity].state == 'on'"><span *ngIf="this.entities[entity.entity].attributes.brightness">{{ math.round(this.entities[entity.entity].attributes.brightness / 2.55) }}%</span></span>
-                                                <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'">
+                                                <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color ? entity.color : '' }">
                                                     <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
                                                 </span>
                                             </div>
@@ -34,7 +33,7 @@
                                                 <span class="name" [class.on]="this.entities[entity.entity].state == 'on'">{{ entity.name }}</span>
                                                 <span class="state" [class.on]="this.entities[entity.entity].state == 'on'">{{ this.entities[entity.entity].state }}</span>
                                                 <span class="value" [class.on]="this.entities[entity.entity].state == 'on'"></span>
-                                                <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'">
+                                                <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color ? entity.color : '' }">
                                                     <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
                                                 </span>
                                             </div>
@@ -55,6 +54,19 @@
 
                                     </ng-template>
 
+                                    <ng-template [ngIf]="entity.type == 'blinds'">
+
+                                        <!-- Sensor -->
+                                        <div class="button on" (press)="hold(entity)">
+                                            <span class="name on">{{ entity.name }}</span>
+                                            <span class="state on">{{ entity.states[blindState(entity)].name }}</span>
+                                            <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : '' }">
+                                                <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+                                            </span>
+                                        </div>
+
+                                    </ng-template>
+
                                     <ng-template [ngIf]="entity.type == 'cover'">
 
                                         <!-- Cover -->
@@ -62,7 +74,7 @@
                                             <span class="name name-on">Entity name</span>
                                             <span class="state state-on">Entity state</span>
                                             <span class="value value-on">50%</span>
-                                            <span class="icon black">
+                                            <span class="icon" [ngStyle]="{'color':entity.color ? entity.color : 'black' }">
                                                 <span class="spin" icon="mdi:window-open"></span>
                                             </span>
                                         </div>
@@ -82,7 +94,7 @@
 
                                 </ng-template>
 
-                                <ng-template [ngIf]="!this.entities[entity.entity] || this.entities[entity.entity].state == 'unavailable'">
+                                <ng-template [ngIf]="(!this.entities[entity.entity] || this.entities[entity.entity].state == 'unavailable') && entity.type != 'blinds'">
                                     <!-- Unavailable -->
                                     <div class="button">
                                         <span class="name">{{ entity.name }}</span>

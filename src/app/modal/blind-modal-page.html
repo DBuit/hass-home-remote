@@ -1,0 +1,22 @@
+<ion-header class="modal-header">
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismissModal()"><span class="mdi mdi-close"></span></ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<div class="modal-page">
+        <div class="icon on">
+            <span class="mdi mdi-{{ entity.states[value].icon }}"></span>
+        </div>
+        <h4>{{ entity.states[value].name }}</h4>
+        <ul class="multiple-switch-container">
+            <li *ngFor="let state of entity.states; let i = index">
+                <label>
+                    <input type="radio" name="switch" [value]="i" [(ngModel)]="value" (ngModelChange)="update($event)" />
+                    <span class="checkmark"></span>
+                </label>
+                <span class="icon mdi mdi-{{ state.icon }}"></span>
+            </li>
+        </ul>
+</div>

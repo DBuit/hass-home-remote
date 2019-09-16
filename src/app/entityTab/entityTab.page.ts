@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { BrightnessModalPage } from '../modal/brightness.modal.page';
 import { WebsocketService } from "../service/websocket.service";
 import { SettingsService } from "../service/settings.service";
+import {BlindModalPage} from "../modal/blind.modal.page";
 
 @Component({
   selector: 'app-entitytab',
@@ -64,7 +65,11 @@ export class EntityTabPage {
   hold(entity) {
     console.log("HOLD: ");
     console.log(entity);
-    this.brightnessModal(entity);
+    if(entity.type == 'light') {
+      this.brightnessModal(entity);
+    } else if(entity.type == 'blinds') {
+      this.blindModal(entity);
+    }
   }
 
   toggle(entity) {
@@ -84,5 +89,36 @@ export class EntityTabPage {
       }
     });
     return await modal.present();
+  }
+
+  async blindModal(entity) {
+    const modal = await this.modalController.create({
+      component: BlindModalPage,
+      cssClass: 'custom-modal-css',
+      componentProps: {
+        'entity': entity,
+        'entities': this.entities,
+        'connection': this.connection
+      }
+    });
+    return await modal.present();
+  }
+
+  blindState(entity) {
+    for(let i = 0; i< 3;i++) {
+      let active = true;
+      for(let j in entity.entities) {
+        let state = parseInt(this.entities[entity.entities[j].entity].state);
+        let position = parseInt(entity.entities[j].positions[i]);
+        if(state < (position -5) || state > (position + 5)) {
+          active = false;
+        }
+      }
+
+      if(active) {
+        return i;
+      }
+    }
+    return 'unavailable';
   }
 }
