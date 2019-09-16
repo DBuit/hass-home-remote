@@ -1,0 +1,14 @@
+<ion-header class="modal-header">
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismissModal()"><span class="mdi mdi-close"></span></ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<div class="modal-page">
+    <div class="icon" [class.on]="this.value == 'on'">
+        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+    </div>
+    <h4>{{ this.value }}</h4>
+    <input type="range" value="0" min="0" max="1" [value]="this.values[value]" #ref (change)="update(ref.value)">
+</div>

@@ -23,7 +23,7 @@
                                                 <span class="name" [class.on]="this.entities[entity.entity].state == 'on'">{{ entity.name }}</span>
                                                 <span class="state" [class.on]="this.entities[entity.entity].state == 'on'">{{ this.entities[entity.entity].state }}</span>
                                                 <span class="value" [class.on]="this.entities[entity.entity].state == 'on'"><span *ngIf="this.entities[entity.entity].attributes.brightness">{{ math.round(this.entities[entity.entity].attributes.brightness / 2.55) }}%</span></span>
-                                                <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color ? entity.color : '' }">
+                                                <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color && this.entities[entity.entity].state == 'on' ? entity.color : '' }">
                                                     <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
                                                 </span>
                                             </div>
@@ -33,7 +33,7 @@
                                                 <span class="name" [class.on]="this.entities[entity.entity].state == 'on'">{{ entity.name }}</span>
                                                 <span class="state" [class.on]="this.entities[entity.entity].state == 'on'">{{ this.entities[entity.entity].state }}</span>
                                                 <span class="value" [class.on]="this.entities[entity.entity].state == 'on'"></span>
-                                                <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color ? entity.color : '' }">
+                                                <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color && this.entities[entity.entity].state == 'on' ? entity.color : '' }">
                                                     <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
                                                 </span>
                                             </div>
@@ -56,11 +56,24 @@
 
                                     <ng-template [ngIf]="entity.type == 'blinds'">
 
-                                        <!-- Sensor -->
+                                        <!-- Blinds -->
                                         <div class="button on" (press)="hold(entity)">
                                             <span class="name on">{{ entity.name }}</span>
                                             <span class="state on">{{ entity.states[blindState(entity)].name }}</span>
                                             <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : '' }">
+                                                <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+                                            </span>
+                                        </div>
+
+                                    </ng-template>
+
+                                    <ng-template [ngIf]="entity.type == 'switch'">
+
+                                        <!-- Switch -->
+                                        <div class="button" [class.on]="this.entities[entity.entity].state == 'on'" (tap)="hold(entity)">
+                                            <span class="name" [class.on]="this.entities[entity.entity].state == 'on'">{{ entity.name }}</span>
+                                            <span class="state" [class.on]="this.entities[entity.entity].state == 'on'">{{ this.entities[entity.entity].state }}</span>
+                                            <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color && this.entities[entity.entity].state == 'on' ? entity.color : '' }">
                                                 <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
                                             </span>
                                         </div>

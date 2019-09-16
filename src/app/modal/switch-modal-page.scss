@@ -1,0 +1,80 @@
+.modal-header {
+  background: rgba(0, 0, 0, 0.8);
+  ion-toolbar {
+    --background: transparent!important;
+    ion-button {
+      --color: #4d4c51;
+      font-size:30px;
+    }
+  }
+}
+.modal-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  flex-direction: column;
+
+  .icon {
+    color: #FFF;
+    font-size: 50px;
+    &.on {
+      color: #f7d959;
+    }
+  }
+
+  h4 {
+    color: #FFF;
+    width: 100%;
+    display: block;
+    font-weight: 500;
+    margin-bottom: 150px;
+    text-align: center;
+  }
+
+  input[type="range"] {
+    outline: 0;
+    border: 0;
+    border-radius: 25px;
+    width: 400px;
+    max-width: 100%;
+    margin: 24px 0;
+    transition: box-shadow 0.2s ease-in-out;
+    -webkit-transform:rotate(270deg);
+    -moz-transform:rotate(270deg);
+    -o-transform:rotate(270deg);
+    -ms-transform:rotate(270deg);
+    transform:rotate(270deg);
+    // Chrome
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+      & {
+        overflow: hidden;
+        height: 130px;
+        -webkit-appearance: none;
+        background-color: #ddd;
+        padding:10px;
+      }
+      &::-webkit-slider-runnable-track {
+        height: 150px;
+        -webkit-appearance: none;
+        color: #ddd;
+        margin-top: -1px;
+        transition: box-shadow 0.2s ease-in-out;
+      }
+      &::-webkit-slider-thumb {
+        width: 200px;
+        -webkit-appearance: none;
+        height: 130px;
+        cursor: ew-resize;
+        background: #fff;
+        transition: box-shadow 0.2s ease-in-out;
+        box-shadow: -340px 0 0 350px #ddd, inset 0 0 0 80px #FFF;
+        position: relative;
+        top: 10px;
+        border-radius:25px;
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { BrightnessModalPage } from '../modal/brightness.modal.page';
 import { WebsocketService } from "../service/websocket.service";
 import { SettingsService } from "../service/settings.service";
 import {BlindModalPage} from "../modal/blind.modal.page";
+import {SwitchModalPage} from "../modal/switch.modal.page";
 
 @Component({
   selector: 'app-entitytab',
@@ -69,6 +70,8 @@ export class EntityTabPage {
       this.brightnessModal(entity);
     } else if(entity.type == 'blinds') {
       this.blindModal(entity);
+    } else if(entity.type == 'switch') {
+      this.switchModal(entity);
     }
   }
 
@@ -94,6 +97,19 @@ export class EntityTabPage {
   async blindModal(entity) {
     const modal = await this.modalController.create({
       component: BlindModalPage,
+      cssClass: 'custom-modal-css',
+      componentProps: {
+        'entity': entity,
+        'entities': this.entities,
+        'connection': this.connection
+      }
+    });
+    return await modal.present();
+  }
+
+  async switchModal(entity) {
+    const modal = await this.modalController.create({
+      component: SwitchModalPage,
       cssClass: 'custom-modal-css',
       componentProps: {
         'entity': entity,
