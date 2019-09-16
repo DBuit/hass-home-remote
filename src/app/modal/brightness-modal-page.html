@@ -13,4 +13,12 @@
         <div class="range-holder">
             <input type="range" [value]="brightness" #ref (change)="updateBrightness(ref.value)">
         </div>
+        <div class="scene-holder" *ngIf="entity.scenes && entity.scenes.length > 0">
+            <div *ngFor="let row of createRange(sceneRows)" class="scene-row">
+                <div class="scene" *ngFor="let scene of entity.scenes.slice(row*4,(row*4)+4); let i = index;" (click)="activateScene(scene.scene)">
+                    <span class="color" [ngStyle]="{'background-color': scene.color }"></span>
+                    <span class="name" *ngIf="scene.name">{{ scene.name }}</span>
+                </div>
+            </div>
+        </div>
 </div>

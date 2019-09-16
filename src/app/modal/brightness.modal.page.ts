@@ -13,6 +13,8 @@ export class BrightnessModalPage {
     @Input() entities: any;
     @Input() connection: any;
     brightness: number = 0;
+    sceneRows: number = 0;
+    rowLength: number = 4;
 
     constructor(public modalController: ModalController) {
     }
@@ -23,7 +25,10 @@ export class BrightnessModalPage {
         } else {
             this.brightness = 0;
         }
-        console.log(this.brightness);
+
+        if(this.entity.scenes && this.entity.scenes.length > 0) {
+            this.sceneRows = Math.ceil(this.entity.scenes.length / this.rowLength);
+        }
     }
 
     updateBrightness(value) {
@@ -37,6 +42,21 @@ export class BrightnessModalPage {
 
     dismissModal() {
         this.modalController.dismiss();
+    }
+
+    createRange(number){
+        var items: number[] = [];
+        for(var i = 0; i < number; i++){
+            items.push(i);
+        }
+        return items;
+    }
+
+    activateScene(scene) {
+        console.log(scene);
+        callService(this.connection, "scene", "turn_on", {
+            entity_id: scene
+        });
     }
 
 }
