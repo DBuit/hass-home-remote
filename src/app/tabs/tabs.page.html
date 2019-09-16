@@ -1,0 +1,19 @@
+<ion-tabs name="tabbar">
+
+  <ion-tab-bar slot="bottom">
+
+    <ng-template ngFor let-tab [ngForOf]="tabs" let-i="index">
+        <ion-tab-button tab="{{ i }}" >
+            <div class="icon"><span class="mdi mdi-{{ tab.icon }}"></span></div>
+            <ion-label>{{ tab.name }}</ion-label>
+        </ion-tab-button>
+    </ng-template>
+
+
+    <ion-tab-button tab="settings/tab">
+        <div class="icon"><span class="mdi mdi-settings-outline"></span></div>
+      <ion-label>Instellingen</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

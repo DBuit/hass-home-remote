@@ -1,0 +1,16 @@
+<ion-header class="modal-header">
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismissModal()"><span class="mdi mdi-close"></span></ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<div class="modal-page">
+        <div class="icon" [class.on]="brightness > 0">
+            <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+        </div>
+        <h4>{{ brightness }}</h4>
+        <div class="range-holder">
+            <input type="range" [value]="brightness" #ref (change)="updateBrightness(ref.value)">
+        </div>
+</div>

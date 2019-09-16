@@ -1,0 +1,172 @@
+ion-content.background{
+  --background: url(../../assets/home_remote_bg.png) center/cover no-repeat;
+}
+
+.card-title {
+  margin-bottom: -10px;
+  margin-left: 4px;
+  font-size: 18px;
+  color: #FFF;
+}
+
+ion-grid {
+  margin-top:30px;
+  padding: 5px 0 5px 5px;
+}
+
+ion-col {
+  padding-right:0;
+}
+
+.homekit-card {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.container {
+  float: left;
+  clear: left;
+  margin-top: 10px;
+  padding: 4px;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.lightpopup {
+  background-color: rgba(255, 0, 0, 0.5);
+  z-index: -1;
+  position: relative;
+}
+
+.button {
+  cursor: pointer;
+  display:inline-block;
+  width: 116px;
+  height: 116px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  margin: 3px;
+  position: relative;
+  overflow:hidden;
+}
+
+.button:last-child {
+  margin-right:13px;
+}
+
+.button.on {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.name {
+  position: absolute;
+  top: 70px;
+  left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100px;
+}
+
+.name.on {
+  color: rgba(0, 0, 0, 1);
+}
+
+.state {
+  position: relative;
+  top: 90px;
+  margin-left: 10px;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.4);
+  text-transform: capitalize;
+  float: left;
+}
+
+.value {
+  visibility: hidden;
+}
+
+.value.on {
+  visibility: visible;
+  position: relative;
+  top: 95px;
+  margin-left: 5px;
+  font-size: 12px;
+  color: rgba(255, 0, 0, 1);
+  text-transform: capitalize;
+  float: left;
+}
+
+.state.on {
+  color: rgba(0, 0, 0, 1);
+}
+.state.unavailable {
+  color: rgba(255, 0, 0, 1);
+}
+
+.icon {
+  position: absolute;
+  top: 15px;
+  left: 5px;
+  height: 40px;
+  width: 40px;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 30px;
+}
+
+.icon.on {
+  color: #f7d959;
+}
+
+.circle {
+  position: absolute;
+  top: 17px;
+  left: 10px;
+  height: 35px;
+  width: 35px;
+  background-color: rgba(0, 255, 0, 1);
+  border-radius: 20px;
+}
+
+.temp {
+  position: absolute;
+  top: 26px;
+  left: 19px;
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+}
+
+.not-found {
+  cursor: pointer;
+  float: left;
+  width: 116px;
+  height: 116px;
+  background-color: rgba(255, 0, 0, 1);
+  border-radius: 12px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+  margin: 3px;
+  position: relative;
+}
+
+.spin {
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "home-remote",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "id": "573ab5bc"
+}

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Settings
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
+    <form (ngSubmit)="saveSettings()">
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+        <ion-item>
+          <ion-label position="stacked">Home assistant url <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" name="url" [(ngModel)]="url"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Long lived token <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" name="token" [(ngModel)]="token"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Configuration url <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" name="configurationUrl" [(ngModel)]="configurationUrl"></ion-input>
+        </ion-item>
+
+        <div class="ion-padding">
+          <ion-button expand="block" type="button" class="ion-no-margin" (click)="getConfiguration()">download/update json configuration</ion-button>
+        </div>
+
+        <ion-item>
+          <ion-label position="stacked">Configuration (JSON)</ion-label>
+          <ion-textarea auto-grow="true" disabled readonly name="configurationString" [(ngModel)]="configurationString"></ion-textarea>
+        </ion-item>
+      </ion-list>
+
+      <div class="ion-padding">
+        <ion-button expand="block" type="submit" class="ion-no-margin">Save settings</ion-button>
+      </div>
+    </form>
+
+</ion-content>
