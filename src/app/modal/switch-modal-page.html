@@ -10,5 +10,7 @@
         <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
     </div>
     <h4>{{ this.value }}</h4>
-    <input type="range" value="0" min="0" max="1" [value]="this.values[value]" #ref (change)="update(ref.value)">
+    <div class="range-holder">
+        <input type="range" value="0" min="0" max="1" [value]="this.values[value]" #ref (change)="update(ref.value)">
+    </div>
 </div>

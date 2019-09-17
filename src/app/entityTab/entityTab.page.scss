@@ -11,7 +11,7 @@ ion-content.background{
 
 ion-grid {
   margin-top:30px;
-  padding: 5px 0 5px 5px;
+  padding: 5px 0 5px 0;
 }
 
 ion-col {
@@ -42,8 +42,9 @@ ion-col {
 .button {
   cursor: pointer;
   display:inline-block;
-  width: 116px;
-  height: 116px;
+  width: 110px;
+  height: 110px;
+  padding:5px;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 12px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
@@ -60,10 +61,14 @@ ion-col {
   background-color: rgba(255, 255, 255, 1);
 }
 
+.button-inner {
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+
 .name {
-  position: absolute;
-  top: 70px;
-  left: 10px;
+  display:block;
   font-size: 18px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.4);
@@ -71,6 +76,7 @@ ion-col {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100px;
+  margin-top: auto;
 }
 
 .name.on {
@@ -79,8 +85,6 @@ ion-col {
 
 .state {
   position: relative;
-  top: 90px;
-  margin-left: 10px;
   font-size: 18px;
   color: rgba(0, 0, 0, 0.4);
   text-transform: capitalize;
@@ -94,12 +98,10 @@ ion-col {
 .value.on {
   visibility: visible;
   position: relative;
-  top: 95px;
   margin-left: 5px;
   font-size: 12px;
   color: rgba(255, 0, 0, 1);
   text-transform: capitalize;
-  float: left;
 }
 
 .state.on {
@@ -110,13 +112,12 @@ ion-col {
 }
 
 .icon {
-  position: absolute;
-  top: 15px;
-  left: 5px;
+  display:block;
   height: 40px;
   width: 40px;
   color: rgba(0, 0, 0, 0.3);
   font-size: 30px;
+  padding-top:5px;
 }
 
 .icon.on {
@@ -146,8 +147,8 @@ ion-col {
 .not-found {
   cursor: pointer;
   float: left;
-  width: 116px;
-  height: 116px;
+  width: 110px;
+  height: 110px;
   background-color: rgba(255, 0, 0, 1);
   border-radius: 12px;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
