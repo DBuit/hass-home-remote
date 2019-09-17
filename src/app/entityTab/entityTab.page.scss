@@ -72,11 +72,13 @@ ion-col {
   font-size: 18px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.4);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   width: 100px;
   margin-top: auto;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap:break-word;
+  overflow: hidden;
 }
 
 .name.on {
