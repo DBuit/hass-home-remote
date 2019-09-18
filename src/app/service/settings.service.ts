@@ -6,8 +6,7 @@ import { Storage } from '@ionic/storage';
 })
 export class SettingsService {
 
-  constructor(private storage: Storage) {
-  }
+  constructor(private storage: Storage) { }
 
   public set(settingName,value){
     value = (value === '') ? null: value;
@@ -19,10 +18,4 @@ export class SettingsService {
   public async remove(settingName){
     return await this.storage.remove(`setting:${ settingName }`);
   }
-  public clear() {
-    this.storage.clear().then(() => {
-      console.log('Storage cleared');
-    });
-  }
-
 }

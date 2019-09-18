@@ -26,11 +26,8 @@ export class EntityTabPage {
   }
 
   async checkSettings() {
-    console.log('[checkSettings]');
     let url = await this.settingsService.get('url');
-    console.log(url);
     let token = await this.settingsService.get('token');
-    console.log(token);
     if(!url || !token) {
       return false;
     } else {
@@ -39,8 +36,6 @@ export class EntityTabPage {
   }
 
   async ngOnInit() {
-    console.log('[ngOnInit]');
-
     if(await this.checkSettings()) {
       this.connect();
       this.index = this.route.snapshot.paramMap.get('index');
@@ -52,8 +47,6 @@ export class EntityTabPage {
   }
 
   async connect() {
-    console.log('[connect]');
-
     this.connection = await this.webSocketService.getConnection();
 
     this.loading = false;
@@ -64,8 +57,6 @@ export class EntityTabPage {
   }
 
   hold(entity) {
-    console.log("HOLD: ");
-    console.log(entity);
     if(entity.type == 'light') {
       this.brightnessModal(entity);
     } else if(entity.type == 'blinds') {

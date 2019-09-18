@@ -53,7 +53,6 @@ export class BrightnessModalPage {
     }
 
     activateScene(scene) {
-        console.log(scene);
         callService(this.connection, "scene", "turn_on", {
             entity_id: scene
         });

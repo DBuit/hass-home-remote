@@ -58,11 +58,6 @@ export class WebsocketService {
     this.connection = await new Connection(socket, connOptions);
     loading.dismiss();
 
-
-
-// conn is the connection from earlier.
-    subscribeConfig(this.connection, config => console.log("New config!", config));
-
     this.connection.addEventListener("disconnected", this.reconnecting);
     this.connection.addEventListener("ready", this.eventHandler);
   }

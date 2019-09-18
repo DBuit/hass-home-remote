@@ -29,8 +29,6 @@ export class BlindModalPage {
             }
 
             if(active) {
-                console.log("ACTIVE");
-                console.log(i);
                 this.value = i;
             }
         }

@@ -25,10 +25,6 @@ export class SettingsTabPage {
     this.configuration = await this.settingsService.get('configuration');
     this.configurationUrl = await this.settingsService.get('configurationUrl');
     this.configurationString = JSON.stringify(this.configuration, undefined, 4);
-
-    console.log(this.url);
-    console.log(this.token);
-    console.log(this.configurationUrl);
   }
 
 
@@ -50,11 +46,9 @@ export class SettingsTabPage {
   }
 
   async getConfiguration() {
-    console.log('Get configuration');
 
     if(this.configurationUrl) {
       //GET JSON from url
-
       let loading = await this.loadingController.create({
         message: 'Downloading configuration file...'
       });
@@ -67,6 +61,7 @@ export class SettingsTabPage {
         this.toast('Configuration saved');
 
       }, (error) => {
+        loading.dismiss();
         this.toast('Error retrieving configuration: '+error.message);
       });
     } else {
