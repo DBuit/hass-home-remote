@@ -30,19 +30,21 @@
     color: #FFF;
     display: block;
     font-weight: 500;
-    margin-bottom: 150px;
+    margin-bottom: 20px;
     text-align: center;
   }
 
   .range-holder {
-    height: 400px;
+    height: 402px;
+    overflow: hidden;
+    padding-top: 102px;
     display: block;
 
     input[type="range"] {
       outline: 0;
       border: 0;
       border-radius: 25px;
-      width: 400px;
+      width: 380px;
       max-width: 100%;
       margin: 24px 0;
       transition: box-shadow 0.2s ease-in-out;
@@ -70,13 +72,13 @@
         &::-webkit-slider-thumb {
           width: 200px;
           -webkit-appearance: none;
-          height: 130px;
+          height: 110px;
           cursor: ew-resize;
           background: #fff;
           transition: box-shadow 0.2s ease-in-out;
           box-shadow: -340px 0 0 350px #ddd, inset 0 0 0 80px #FFF;
           position: relative;
-          top: 10px;
+          top: 20px;
           border-radius: 25px;
         }
       }

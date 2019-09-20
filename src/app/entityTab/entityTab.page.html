@@ -1,5 +1,17 @@
 <ion-content class="background" >
     <ion-grid>
+        <ng-template [ngIf]="home">
+            <div class="tabHeader">
+                <h1>{{ title }}</h1>
+                <ul>
+                    <ng-template ngFor let-stat [ngForOf]="homeStats  | keyvalue">
+                        <li *ngIf="stat.value">{{stat.value}}</li>
+                    </ng-template>
+
+                </ul>
+            </div>
+        </ng-template>
+
         <ng-template ngFor let-row [ngForOf]="setup">
             <ion-row>
                 <ion-col>
@@ -13,123 +25,10 @@
                         <div class="homekit-card">
 
                             <ng-template ngFor let-entity [ngForOf]="entityrow">
-                                <ng-template [ngIf]="(this.entities[entity.entity] && this.entities[entity.entity].state != 'unavailable') || entity.type == 'blinds'">
-                                    <ng-template [ngIf]="entity.type == 'light'">
 
-                                        <!-- Light -->
+                                <tile *ngIf="entity.type != 'blinds'" [connection]="connection" [entityData]="entities[entity.entity]" [entity]="entity"></tile>
 
-                                        <ng-template [ngIf]="entity.brightness">
-                                            <div class="button" [class.on]="this.entities[entity.entity].state == 'on'" (tap)="toggle(entity.entity)" (press)="hold(entity)">
-                                                <div class="button-inner">
-                                                    <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color && this.entities[entity.entity].state == 'on' ? entity.color : '' }">
-                                                        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
-                                                    </span>
-                                                    <span class="name" [class.on]="this.entities[entity.entity].state == 'on'">{{ entity.name }}</span>
-                                                    <span class="state" [class.on]="this.entities[entity.entity].state == 'on'">{{ this.entities[entity.entity].state }} <span class="value" [class.on]="this.entities[entity.entity].state == 'on'"><span *ngIf="this.entities[entity.entity].attributes.brightness">{{ math.round(this.entities[entity.entity].attributes.brightness / 2.55) }}%</span></span></span>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                        <ng-template [ngIf]="!entity.brightness">
-                                            <div class="button" [class.on]="this.entities[entity.entity].state == 'on'" (tap)="toggle(entity.entity)">
-                                                <div class="button-inner">
-                                                    <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color && this.entities[entity.entity].state == 'on' ? entity.color : '' }">
-                                                        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
-                                                    </span>
-                                                    <span class="name" [class.on]="this.entities[entity.entity].state == 'on'">{{ entity.name }}</span>
-                                                    <span class="state" [class.on]="this.entities[entity.entity].state == 'on'">{{ this.entities[entity.entity].state }} <span class="value" [class.on]="this.entities[entity.entity].state == 'on'"></span></span>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-
-                                    </ng-template>
-
-                                    <ng-template [ngIf]="entity.type == 'sensor'">
-
-                                        <!-- Sensor -->
-                                        <div class=" button on">
-                                            <div class="button-inner">
-                                            <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : 'black' }">
-                                                <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
-                                            </span>
-                                            <span class="name on">{{ entity.name }}</span>
-                                            <span class="state on">{{ this.entities[entity.entity].state }}<span *ngIf="this.entities[entity.entity].attributes.unit_of_measurement">{{ this.entities[entity.entity].attributes.unit_of_measurement }}</span></span>
-                                            </div>
-                                        </div>
-
-                                    </ng-template>
-
-                                    <ng-template [ngIf]="entity.type == 'blinds'">
-
-                                        <!-- Blinds -->
-                                        <div class="button on" (tap)="hold(entity)">
-                                            <div class="button-inner">
-                                                <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : '' }">
-                                                    <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
-                                                </span>
-                                                <span class="name on">{{ entity.name }}</span>
-                                                <span class="state on">{{ entity.states[blindState(entity)].name }}</span>
-                                            </div>
-                                        </div>
-
-                                    </ng-template>
-
-                                    <ng-template [ngIf]="entity.type == 'switch'">
-
-                                        <!-- Switch -->
-                                        <div class="button" [class.on]="this.entities[entity.entity].state == 'on'" (tap)="hold(entity)">
-                                            <div class="button-inner">
-                                            <span class="icon" [class.on]="this.entities[entity.entity].state == 'on'" [ngStyle]="{'color':entity.color && this.entities[entity.entity].state == 'on' ? entity.color : '' }">
-                                                <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
-                                            </span>
-                                            <span class="name" [class.on]="this.entities[entity.entity].state == 'on'">{{ entity.name }}</span>
-                                            <span class="state" [class.on]="this.entities[entity.entity].state == 'on'">{{ this.entities[entity.entity].state }}</span>
-                                            </div>
-                                        </div>
-
-                                    </ng-template>
-
-                                    <ng-template [ngIf]="entity.type == 'cover'">
-
-                                        <!-- Cover -->
-                                        <div class="button on">
-                                            <div class="button-inner">
-                                                <span class="icon" [ngStyle]="{'color':entity.color ? entity.color : 'black' }">
-                                                    <span class="spin" icon="mdi:window-open"></span>
-                                                </span>
-                                                <span class="name on">Entity name</span>
-                                                <span class="state on">Entity state <span class="value on">50%</span></span>
-                                            </div>
-                                        </div>
-
-                                    </ng-template>
-
-                                    <ng-template [ngIf]="entity.type == 'climate'">
-                                        <!-- Climate -->
-                                        <div class="button button-on">
-                                            <div class="button-inner">
-                                                <span class="name on">Entity name</span>
-                                                <span class="circle"></span>
-                                                <span class="temp">19°</span>
-                                                <span class="state on">Entity state <span class="value on">15°</span></span>
-                                            </div>
-                                        </div>
-                                    </ng-template>
-
-                                </ng-template>
-
-                                <ng-template [ngIf]="(!this.entities[entity.entity] || this.entities[entity.entity].state == 'unavailable') && entity.type != 'blinds'">
-                                    <!-- Unavailable -->
-                                    <div class="button">
-
-                                        <div class="button-inner">
-                                            <span class="icon">
-                                                <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
-                                            </span>
-                                            <span class="name">{{ entity.name }}</span>
-                                            <span class="state unavailable">Unavailable <span class="value"></span></span>
-                                        </div>
-                                    </div>
-                                </ng-template>
+                                <blinds-tile *ngIf="entity.type == 'blinds'" [connection]="connection" [entities]="entities" [entity]="entity"></blinds-tile>
 
                             </ng-template>
 

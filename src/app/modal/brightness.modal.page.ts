@@ -1,4 +1,4 @@
-import {Component, Input, SimpleChange, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import { callService, Connection } from "home-assistant-js-websocket";
 import { ModalController } from '@ionic/angular';
 
@@ -7,21 +7,20 @@ import { ModalController } from '@ionic/angular';
     styleUrls: ['brightness-modal-page.scss'],
     selector: 'brightness-modal-page',
 })
-export class BrightnessModalPage {
+export class BrightnessModalPage implements OnInit {
 
     @Input() entity: any;
-    @Input() entities: any;
+    @Input() entityData: any;
     @Input() connection: any;
     brightness: number = 0;
     sceneRows: number = 0;
     rowLength: number = 4;
 
-    constructor(public modalController: ModalController) {
-    }
+    constructor(public modalController: ModalController) { }
 
     ngOnInit() {
-        if(this.entities[this.entity.entity].attributes.brightness) {
-            this.brightness = Math.round(this.entities[this.entity.entity].attributes.brightness / 2.55);
+        if(this.entityData.attributes.brightness) {
+            this.brightness = Math.round(this.entityData.attributes.brightness / 2.55);
         } else {
             this.brightness = 0;
         }
@@ -56,6 +55,7 @@ export class BrightnessModalPage {
         callService(this.connection, "scene", "turn_on", {
             entity_id: scene
         });
+        this.modalController.dismiss();
     }
 
 }

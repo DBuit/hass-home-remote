@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Auth, getAuth, createConnection, subscribeEntities, callService, ConnectionOptions, Connection } from "home-assistant-js-websocket";
+import { subscribeEntities } from "home-assistant-js-websocket";
 import { ModalController } from '@ionic/angular';
-import { BrightnessModalPage } from '../modal/brightness.modal.page';
 import { WebsocketService } from "../service/websocket.service";
 import { SettingsService } from "../service/settings.service";
-import {BlindModalPage} from "../modal/blind.modal.page";
-import {SwitchModalPage} from "../modal/switch.modal.page";
 
 @Component({
   selector: 'app-entitytab',
@@ -17,10 +14,16 @@ export class EntityTabPage {
   configuration: any;
   entities: any;
   setup: any[] = [];
-  math = Math;
   connection: any;
   loading: boolean = true;
   index: string;
+  home: boolean = false;
+  unusedEntitiesForStats: any[] = [];
+  title: string = "";
+  homeStats: any = {
+    'light': null,
+    'media_player': null
+  };
 
   constructor(public modalController: ModalController, private route: ActivatedRoute, private router: Router, public webSocketService: WebsocketService, public settingsService: SettingsService) {
   }
@@ -28,11 +31,7 @@ export class EntityTabPage {
   async checkSettings() {
     let url = await this.settingsService.get('url');
     let token = await this.settingsService.get('token');
-    if(!url || !token) {
-      return false;
-    } else {
-      return true;
-    }
+    return !(!url || !token);
   }
 
   async ngOnInit() {
@@ -41,8 +40,19 @@ export class EntityTabPage {
       this.index = this.route.snapshot.paramMap.get('index');
       this.configuration = await this.settingsService.get('configuration');
       this.setup = this.configuration[this.index].content;
+
+      if(this.configuration[this.index].type && this.configuration[this.index].type == 'home') {
+        this.home = true;
+        this.unusedEntitiesForStats = this.configuration[this.index].unusedEntitiesForStats;
+        if(this.configuration[this.index].title) {
+          this.title =  this.configuration[this.index].title;
+        } else {
+          this. title = this.configuration[this.index].name;
+        }
+      }
+
     } else {
-      this.router.navigate(['/tabs/settings/tab']);
+      await this.router.navigate(['/tabs/settings/tab']);
     }
   }
 
@@ -51,81 +61,36 @@ export class EntityTabPage {
 
     this.loading = false;
     subscribeEntities(this.connection, entities => {
-      console.log(entities);
       this.entities = entities;
-    });
-  }
-
-  hold(entity) {
-    if(entity.type == 'light') {
-      this.brightnessModal(entity);
-    } else if(entity.type == 'blinds') {
-      this.blindModal(entity);
-    } else if(entity.type == 'switch') {
-      this.switchModal(entity);
-    }
-  }
-
-  toggle(entity) {
-    callService(this.connection, "homeassistant", "toggle", {
-      entity_id: entity
-    });
-  }
-
-  async brightnessModal(entity) {
-    const modal = await this.modalController.create({
-      component: BrightnessModalPage,
-      cssClass: 'custom-modal-css',
-      componentProps: {
-        'entity': entity,
-        'entities': this.entities,
-        'connection': this.connection
-      }
-    });
-    return await modal.present();
-  }
-
-  async blindModal(entity) {
-    const modal = await this.modalController.create({
-      component: BlindModalPage,
-      cssClass: 'custom-modal-css',
-      componentProps: {
-        'entity': entity,
-        'entities': this.entities,
-        'connection': this.connection
-      }
-    });
-    return await modal.present();
-  }
-
-  async switchModal(entity) {
-    const modal = await this.modalController.create({
-      component: SwitchModalPage,
-      cssClass: 'custom-modal-css',
-      componentProps: {
-        'entity': entity,
-        'entities': this.entities,
-        'connection': this.connection
-      }
-    });
-    return await modal.present();
-  }
-
-  blindState(entity) {
-    for(let i = 0; i< 3;i++) {
-      let active = true;
-      for(let j in entity.entities) {
-        let state = parseInt(this.entities[entity.entities[j].entity].state);
-        let position = parseInt(entity.entities[j].positions[i]);
-        if(state < (position -5) || state > (position + 5)) {
-          active = false;
+      if(this.home) {
+        let countLight = 0;
+        let countMediaplayer = 0;
+        for(let key in entities) {
+          console.log(key);
+          if(key.includes('light.') && !this.unusedEntitiesForStats.includes(key)) {
+            if(entities[key].state == 'on') {
+              countLight++;
+            }
+            if(countLight > 0) {
+              this.homeStats.light = countLight + ' lights on';
+            } else {
+              this.homeStats.light = null;
+            }
+          }
+          if(key.includes('media_player.') && !this.unusedEntitiesForStats.includes(key)) {
+            if(entities[key].state == 'playing') {
+              countMediaplayer++;
+            }
+            if(countMediaplayer > 0) {
+              this.homeStats.media_player = countMediaplayer + ' speakers are on';
+            } else {
+              this.homeStats.media_player = null;
+            }
+          }
         }
       }
-
-      if(active) {
-        return i;
-      }
-    }
-    return 'unavailable';
+    });
   }
+
+
 }

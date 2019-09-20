@@ -21,14 +21,14 @@ import { SwitchModalPage } from "./modal/switch.modal.page";
 @NgModule({
   declarations: [AppComponent, BrightnessModalPage, BlindModalPage, SwitchModalPage],
   entryComponents: [BrightnessModalPage, BlindModalPage, SwitchModalPage],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})],
   providers: [
     StatusBar,
     SplashScreen,
     BrightnessModalPage,
     BlindModalPage,
     SwitchModalPage,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   bootstrap: [AppComponent]
 })

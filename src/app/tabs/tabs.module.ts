@@ -11,6 +11,11 @@ import { TabsPage } from './tabs.page';
 import { SettingsTabPage } from '../settingsTab/settingsTab.page';
 import { EntityTabPage } from "../entityTab/entityTab.page";
 
+// Tile
+import { TileComponent } from "../tile/tile.component";
+import { BlindsTileComponent } from "../blinds-tile/blinds-tile.component";
+
+
 @NgModule({
   imports: [
     IonicModule,
@@ -18,7 +23,7 @@ import { EntityTabPage } from "../entityTab/entityTab.page";
     FormsModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage, SettingsTabPage, EntityTabPage],
+  declarations: [TabsPage, SettingsTabPage, EntityTabPage, TileComponent, BlindsTileComponent],
   providers: [RedirectGuard]
 })
 export class TabsPageModule {}

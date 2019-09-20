@@ -7,10 +7,10 @@ import { ModalController } from '@ionic/angular';
     styleUrls: ['switch-modal-page.scss'],
     selector: 'switch-modal-page',
 })
-export class SwitchModalPage {
+export class SwitchModalPage  {
 
     @Input() entity: any;
-    @Input() entities: any;
+    @Input() entityData: any;
     @Input() connection: any;
     value: string = 'off';
     values: any = {
@@ -26,8 +26,8 @@ export class SwitchModalPage {
     }
 
     ngOnInit() {
-        if(this.entities[this.entity.entity].state) {
-            this.value = this.entities[this.entity.entity].state;
+        if(this.entityData.state) {
+            this.value = this.entityData.state;
         } else {
             this.value = 'off';
         }

@@ -1,0 +1,117 @@
+<ng-template [ngIf]="entityData && entityData.state != 'unavailable'">
+  <ng-template [ngIf]="entity.type == 'light'">
+
+    <!-- Light -->
+    <ng-template [ngIf]="entity.brightness">
+      <div class="button" [class.on]="entityData.state == 'on'" (tap)="toggle(entity.entity)" (press)="hold(entity)">
+        <div class="button-inner">
+      <span class="icon" [class.on]="entityData.state == 'on'" [ngStyle]="{'color':entity.color && entityData.state == 'on' ? entity.color : '' }">
+        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+      </span>
+          <span class="name" [class.on]="entityData.state == 'on'">{{ entity.name }}</span>
+          <span class="state" [class.on]="entityData.state == 'on'">{{ entityData.state }} <span class="value" [class.on]="entityData.state == 'on'"><span *ngIf="entityData.attributes.brightness">{{ math.round(entityData.attributes.brightness / 2.55) }}%</span></span></span>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="!entity.brightness">
+      <div class="button" [class.on]="entityData.state == 'on'" (tap)="toggle(entity.entity)">
+        <div class="button-inner">
+      <span class="icon" [class.on]="entityData.state == 'on'" [ngStyle]="{'color':entity.color && entityData.state == 'on' ? entity.color : '' }">
+        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+      </span>
+          <span class="name" [class.on]="entityData.state == 'on'">{{ entity.name }}</span>
+          <span class="state" [class.on]="entityData.state == 'on'">{{ entityData.state }} <span class="value" [class.on]="entityData.state == 'on'"></span></span>
+        </div>
+      </div>
+    </ng-template>
+
+
+  </ng-template>
+
+  <ng-template [ngIf]="entity.type == 'sensor'">
+
+    <!-- Sensor -->
+    <div class=" button on">
+      <div class="button-inner">
+        <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : 'black' }">
+          <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+        </span>
+        <span class="name on">{{ entity.name }}</span>
+        <span class="state on">{{ entityData.state }}<span *ngIf="entityData.attributes.unit_of_measurement">{{ entityData.attributes.unit_of_measurement }}</span></span>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <ng-template [ngIf]="entity.type == 'switch'">
+
+    <!-- Switch -->
+    <div class="button" [class.on]="entityData.state == 'on'" (tap)="hold(entity)">
+      <div class="button-inner">
+        <span class="icon" [class.on]="entityData.state == 'on'" [ngStyle]="{'color':entity.color && entityData.state == 'on' ? entity.color : '' }">
+          <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+        </span>
+        <span class="name" [class.on]="entityData.state == 'on'">{{ entity.name }}</span>
+        <span class="state" [class.on]="entityData.state == 'on'">{{ entityData.state }}</span>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <ng-template [ngIf]="entity.type == 'mediaplayer'">
+
+    <!-- Mediaplayer -->
+    <div class="button" [class.on]="entityData.state == 'playing'">
+      <div class="button-inner">
+        <span class="icon" [class.on]="entityData.state == 'playing'" [ngStyle]="{'color':entity.color && entityData.state == 'playing' ? entity.color : '' }">
+          <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon[entityData.state] }}"></span>
+        </span>
+        <span class="name" [class.on]="entityData.state == 'playing'">{{ entity.name }}</span>
+        <span class="state" [class.on]="entityData.state == 'playing'">{{ entityData.state }}</span>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <ng-template [ngIf]="entity.type == 'cover'">
+
+    <!-- Cover -->
+    <div class="button on">
+      <div class="button-inner">
+        <span class="icon" [ngStyle]="{'color':entity.color ? entity.color : 'black' }">
+          <span class="spin" icon="mdi:window-open"></span>
+        </span>
+        <span class="name on">Entity name</span>
+        <span class="state on">Entity state <span class="value on">50%</span></span>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <ng-template [ngIf]="entity.type == 'climate'">
+    <!-- Climate -->
+    <div class="button button-on">
+      <div class="button-inner">
+        <span class="name on">Entity name</span>
+        <span class="circle"></span>
+        <span class="temp">19°</span>
+        <span class="state on">Entity state <span class="value on">15°</span></span>
+      </div>
+    </div>
+  </ng-template>
+
+</ng-template>
+
+<ng-template [ngIf]="!entityData || entityData.state == 'unavailable'">
+  <!-- Unavailable -->
+  <div class="button">
+
+    <div class="button-inner">
+      <span class="icon">
+        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+      </span>
+      <span class="name">{{ entity.name }}</span>
+      <span class="state unavailable">Unavailable <span class="value"></span></span>
+    </div>
+  </div>
+</ng-template>

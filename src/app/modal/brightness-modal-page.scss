@@ -30,7 +30,7 @@
     color: #FFF;
     display: block;
     font-weight: 500;
-    margin-bottom: 120px;
+    margin-bottom: 20px;
     text-align: center;
 
     &:after {
@@ -40,8 +40,10 @@
   }
 
   .range-holder {
-    height:400px;
-    display:block;
+    height: 402px;
+    overflow: hidden;
+    padding-top: 102px;
+    display: block;
     input[type="range"] {
       outline: 0;
       border: 0;
@@ -92,7 +94,7 @@
 
   .scene-holder {
     display:block;
-    margin-top:-70px;
+    margin-top:20px;
     .scene-row {
       display:block;
       text-align:center;
