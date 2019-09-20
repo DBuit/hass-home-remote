@@ -52,42 +52,38 @@
       max-width: 100%;
       margin: 24px 0;
       transition: box-shadow 0.2s ease-in-out;
-      -webkit-transform: rotate(270deg);
-      -moz-transform: rotate(270deg);
-      -o-transform: rotate(270deg);
-      -ms-transform: rotate(270deg);
-      transform: rotate(270deg);
-      // Chrome
-      @media screen and (-webkit-min-device-pixel-ratio: 0) {
-        & {
-          overflow: hidden;
-          height: 150px;
-          -webkit-appearance: none;
-          background-color: #ddd;
-        }
-        &::-webkit-slider-runnable-track {
-          height: 150px;
-          -webkit-appearance: none;
-          color: #ddd;
-          margin-top: -1px;
-          transition: box-shadow 0.2s ease-in-out;
-        }
-        &::-webkit-slider-thumb {
-          width: 5px;
-          -webkit-appearance: none;
-          height: 80px;
-          cursor: ew-resize;
-          background: #fff;
-          box-shadow: -340px 0 0 350px #FFF, inset 0 0 0 80px #ddd;
-          border-radius: 0;
-          transition: box-shadow 0.2s ease-in-out;
-          position: relative;
-          top: 35px;
-        }
-        // &:active::-webkit-slider-thumb {
-        // 	background: #fff;
-        // 	box-shadow: -340px 0 0 320px #1597ff, inset 0 0 0 3px #1597ff;
-        // }
+      -webkit-transform:rotate(270deg);
+      -moz-transform:rotate(270deg);
+      -o-transform:rotate(270deg);
+      -ms-transform:rotate(270deg);
+      transform:rotate(270deg);
+      overflow: hidden;
+      height: 150px;
+      -webkit-appearance: none;
+      background-color: #ddd;
+
+      &::-webkit-slider-runnable-track {
+        height: 150px;
+        -webkit-appearance: none;
+        color: #ddd;
+        margin-top: -1px;
+        transition: box-shadow 0.2s ease-in-out;
+      }
+      &::-webkit-slider-thumb {
+        width: 25px;
+        border-right:10px solid #FFF;
+        border-left:10px solid #FFF;
+        border-top:20px solid #FFF;
+        border-bottom:20px solid #FFF;
+        -webkit-appearance: none;
+        height: 80px;
+        cursor: ew-resize;
+        background: #fff;
+        box-shadow: -350px 0 0 350px #FFF, inset 0 0 0 80px #ddd;
+        border-radius: 0;
+        transition: box-shadow 0.2s ease-in-out;
+        position: relative;
+        top: 35px;
       }
     }
   }
