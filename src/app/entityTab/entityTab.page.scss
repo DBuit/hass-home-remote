@@ -1,5 +1,5 @@
 ion-content.background{
-  --background: url(../../assets/home_remote_bg.png) center/cover no-repeat;
+  --background: url(../../assets/background-large.jpg) center/cover no-repeat;
 }
 
 .card-title {
@@ -7,6 +7,7 @@ ion-content.background{
   margin-left: 4px;
   font-size: 18px;
   color: #FFF;
+  font-weight:300;
 }
 
 ion-grid {
@@ -15,12 +16,13 @@ ion-grid {
 }
 
 .tabHeader {
-  margin-bottom: 150px;
+  height: 250px;
   h1 {
     margin-bottom: 30px;
     margin-left: 4px;
     font-size: 32px;
     color: #FFF;
+    font-weight:300;
   }
   ul {
     margin:0 0 0 4px;
@@ -29,7 +31,8 @@ ion-grid {
     li {
       display:block;
       color:#FFF;
-      font-size:22px;
+      font-size:20px;
+      font-weight:300;
     }
   }
 }

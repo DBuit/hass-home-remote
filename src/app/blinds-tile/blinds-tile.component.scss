@@ -10,6 +10,7 @@
   margin: 3px;
   position: relative;
   overflow:hidden;
+  font-weight:300;
 }
 
 .button:last-child {
@@ -29,7 +30,7 @@
 .name {
   display:block;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 500;
   color: rgba(0, 0, 0, 0.4);
   width: 100px;
   margin-top: auto;
