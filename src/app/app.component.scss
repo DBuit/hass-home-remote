@@ -1,0 +1,33 @@
+.screensaver {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background-color:#000;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+  }
+
+  &.hide {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+  }
+
+  .icon {
+    width: 100px;
+    height: 100px;
+    font-size: 100px;
+    color: rgba(255,255,255,0.5);
+  }
+}

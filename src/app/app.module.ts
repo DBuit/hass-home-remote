@@ -17,9 +17,10 @@ import { IonicStorageModule } from '@ionic/storage';
 import { BrightnessModalPage } from './modal/brightness.modal.page';
 import { BlindModalPage } from './modal/blind.modal.page';
 import { SwitchModalPage } from "./modal/switch.modal.page";
+import { ScreensaverTimerDirective } from './screensaver-timer.directive';
 
 @NgModule({
-  declarations: [AppComponent, BrightnessModalPage, BlindModalPage, SwitchModalPage],
+  declarations: [AppComponent, BrightnessModalPage, BlindModalPage, SwitchModalPage, ScreensaverTimerDirective],
   entryComponents: [BrightnessModalPage, BlindModalPage, SwitchModalPage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})],
   providers: [

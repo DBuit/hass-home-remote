@@ -66,7 +66,6 @@ export class EntityTabPage {
         let countLight = 0;
         let countMediaplayer = 0;
         for(let key in entities) {
-          console.log(key);
           if(key.includes('light.') && !this.unusedEntitiesForStats.includes(key)) {
             if(entities[key].state == 'on') {
               countLight++;
