@@ -33,6 +33,7 @@ export class TileComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   hold(entity) {
+    console.log('hold');
     if(entity.type == 'light') {
       this.brightnessModal(entity);
     } else if(entity.type == 'switch') {
@@ -41,6 +42,7 @@ export class TileComponent implements OnInit, OnChanges {
   }
 
   toggle(entity) {
+    console.log('tap');
     callService(this.connection, "homeassistant", "toggle", {
       entity_id: entity
     });
@@ -56,7 +58,7 @@ export class TileComponent implements OnInit, OnChanges {
         'connection': this.connection
       }
     });
-    return await modal.present();
+    await modal.present();
   }
 
   async switchModal(entity) {
@@ -69,7 +71,7 @@ export class TileComponent implements OnInit, OnChanges {
         'connection': this.connection
       }
     });
-    return await modal.present();
+    await modal.present();
   }
 
 

@@ -1,5 +1,5 @@
 <!-- Blinds -->
-<div class="button on" (tap)="hold(entity)">
+<div class="button on" (click)="hold(entity)">
   <div class="button-inner">
       <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : '' }">
         <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>

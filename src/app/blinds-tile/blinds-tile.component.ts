@@ -32,6 +32,7 @@ export class BlindsTileComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   hold(entity) {
+    console.log('hold');
     this.blindModal(entity);
   }
 
@@ -45,7 +46,10 @@ export class BlindsTileComponent implements OnInit, OnChanges {
         'connection': this.connection
       }
     });
-    return await modal.present();
+    console.log(modal);
+    await modal.present();
+
+    console.log('presented');
   }
 
   blindState(entity) {
