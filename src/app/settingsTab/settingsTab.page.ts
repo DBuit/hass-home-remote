@@ -91,4 +91,8 @@ export class SettingsTabPage {
     await toast.present();
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
 }

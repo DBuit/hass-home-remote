@@ -13,10 +13,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage';
 
-//Modals
+// Modals
 import { BrightnessModalPage } from './modal/brightness.modal.page';
 import { BlindModalPage } from './modal/blind.modal.page';
-import { SwitchModalPage } from "./modal/switch.modal.page";
+import { SwitchModalPage } from './modal/switch.modal.page';
 import { ScreensaverTimerDirective } from './screensaver-timer.directive';
 
 @NgModule({
