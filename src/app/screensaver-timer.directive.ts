@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
 import { Observable, fromEvent, merge, Subject, timer } from 'rxjs';
+import { SettingsService } from './service/settings.service';
 
 @Directive({
   selector: '[appScreensaverTimer]'
@@ -7,13 +8,14 @@ import { Observable, fromEvent, merge, Subject, timer } from 'rxjs';
 export class ScreensaverTimerDirective {
 
   idle: any;
-  idleTime: number = 10;
+  idleTime: number = 20;
   timeOutMilliSeconds: number;
   idleSubscription: any;
   timer: any;
   active: boolean = false;
+  enabled: boolean = true;
 
-  constructor(public element: ElementRef, private renderer: Renderer2) {
+  constructor(public element: ElementRef, private renderer: Renderer2, public settingsService: SettingsService) {
     this.idle = merge(
         fromEvent(document, 'mousemove'),
         fromEvent(document, 'click'),
@@ -27,12 +29,29 @@ export class ScreensaverTimerDirective {
         fromEvent(window, 'resize'),
     );
 
-    this.timeOutMilliSeconds = this.idleTime * 1000;
-    this.idleSubscription = this.idle.subscribe((res) => {
-      this.resetTimer();
-    });
+    this.init();
+  }
 
-    this.startTimer();
+  async init() {
+    const customEnabled = await this.settingsService.get('idleEnabled');
+    if (customEnabled) {
+      this.enabled = customEnabled;
+    }
+
+    if (this.enabled) {
+      const customIdleTime = await this.settingsService.get('idleTime');
+
+      if (customIdleTime) {
+        this.timeOutMilliSeconds = customIdleTime * 1000;
+      } else {
+        this.timeOutMilliSeconds = this.idleTime * 1000;
+      }
+      this.idleSubscription = this.idle.subscribe((res) => {
+        this.resetTimer();
+      });
+
+      this.startTimer();
+    }
   }
 
   startTimer() {
