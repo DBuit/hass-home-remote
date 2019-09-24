@@ -11,6 +11,7 @@
   position: relative;
   overflow:hidden;
   font-weight:300;
+  touch-action: auto!important;
 }
 
 .button:last-child {
