@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
-import { callService, Connection } from "home-assistant-js-websocket";
+import {callService, Connection, subscribeEntities} from 'home-assistant-js-websocket';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -19,7 +19,7 @@ export class BrightnessModalPage implements OnInit {
     constructor(public modalController: ModalController) { }
 
     ngOnInit() {
-        if(this.entityData.attributes.brightness) {
+        if (this.entityData.attributes.brightness) {
             this.brightness = Math.round(this.entityData.attributes.brightness / 2.55);
         } else {
             this.brightness = 0;
@@ -28,12 +28,21 @@ export class BrightnessModalPage implements OnInit {
         if(this.entity.scenes && this.entity.scenes.length > 0) {
             this.sceneRows = Math.ceil(this.entity.scenes.length / this.rowLength);
         }
+
+        subscribeEntities(this.connection, entities => {
+            this.entityData = entities[this.entity.entity];
+            if (this.entityData.attributes.brightness) {
+                this.brightness = Math.round(this.entityData.attributes.brightness / 2.55);
+            } else {
+                this.brightness = 0;
+            }
+        });
     }
 
     updateBrightness(value) {
         this.brightness = value;
 
-        callService(this.connection, "homeassistant", "turn_on", {
+        callService(this.connection, 'homeassistant', 'turn_on', {
             entity_id: this.entity.entity,
             brightness: this.brightness * 2.55
         });
@@ -43,19 +52,18 @@ export class BrightnessModalPage implements OnInit {
         this.modalController.dismiss();
     }
 
-    createRange(number){
-        var items: number[] = [];
-        for(var i = 0; i < number; i++){
+    createRange(amount) {
+        const items: number[] = [];
+        for (let i = 0; i < amount; i++) {
             items.push(i);
         }
         return items;
     }
 
     activateScene(scene) {
-        callService(this.connection, "scene", "turn_on", {
+        callService(this.connection, 'scene', 'turn_on', {
             entity_id: scene
         });
-        this.modalController.dismiss();
     }
 
 }
