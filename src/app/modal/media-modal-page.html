@@ -1,0 +1,14 @@
+<ion-header class="modal-header">
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (tap)="dismissModal()"><span class="mdi mdi-close"></span></ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<div class="modal-page">
+    <div class="icon" [class.on]="this.entityData.state == 'playing'">
+        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon[entityData.state] }}"></span>
+    </div>
+    <h4>{{ this.entityData.state }}</h4>
+
+</div>

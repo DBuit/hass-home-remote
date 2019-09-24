@@ -61,7 +61,7 @@
   <ng-template [ngIf]="entity.type == 'mediaplayer'">
 
     <!-- Mediaplayer -->
-    <div class="button" [class.on]="entityData.state == 'playing'">
+    <div class="button" [class.on]="entityData.state == 'playing'" (click)="hold(entity)">
       <div class="button-inner">
         <span class="icon" [class.on]="entityData.state == 'playing'" [ngStyle]="{'color':entity.color && entityData.state == 'playing' ? entity.color : '' }">
           <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon[entityData.state] }}"></span>

@@ -3,6 +3,7 @@ import {callService} from "home-assistant-js-websocket";
 import {BrightnessModalPage} from "../modal/brightness.modal.page";
 import {SwitchModalPage} from "../modal/switch.modal.page";
 import {ModalController} from "@ionic/angular";
+import {MediaModalPage} from '../modal/media.modal.page';
 
 @Component({
   selector: 'tile',
@@ -38,6 +39,8 @@ export class TileComponent implements OnInit, OnChanges {
       this.brightnessModal(entity);
     } else if(entity.type == 'switch') {
       this.switchModal(entity);
+    } else if(entity.type == 'mediaplayer') {
+      this.mediaModal(entity);
     }
   }
 
@@ -74,6 +77,17 @@ export class TileComponent implements OnInit, OnChanges {
     await modal.present();
   }
 
-
+  async mediaModal(entity) {
+    const modal = await this.modalController.create({
+      component: MediaModalPage,
+      cssClass: 'custom-modal-css',
+      componentProps: {
+        'entity': entity,
+        'entityData': this.entityData,
+        'connection': this.connection
+      }
+    });
+    await modal.present();
+  }
 
 }

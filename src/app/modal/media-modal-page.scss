@@ -1,0 +1,38 @@
+.modal-header {
+  background: rgba(0, 0, 0, 0.8);
+  ion-toolbar {
+    --background: transparent!important;
+    ion-button {
+      --color: #4d4c51;
+      font-size: 50px;
+      margin-top: 15px;
+    }
+  }
+}
+.modal-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  flex-direction: column;
+
+  .icon {
+    color: #FFF;
+    font-size: 50px;
+    &.on {
+      color: #f7d959;
+    }
+  }
+
+  h4 {
+    color: #FFF;
+    display: block;
+    font-weight: 300;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+
+}
