@@ -13,6 +13,8 @@ export class MediaModalPage implements OnInit {
     @Input() entityData: any;
     @Input() connection: any;
     volume: number;
+    inGroup: any = {};
+    loading: boolean = false;
 
     constructor(public modalController: ModalController) {
     }
@@ -21,8 +23,23 @@ export class MediaModalPage implements OnInit {
         this.volume = this.entityData.attributes.volume_level * 100;
         subscribeEntities(this.connection, entities => {
             this.entityData = entities[this.entity.entity];
-            this.volume = this.entityData.attributes.volume_level * 100;
+            this.init();
         });
+        this.init();
+    }
+
+    init() {
+        this.loading = false;
+        this.volume = this.entityData.attributes.volume_level * 100;
+
+        if (this.entity.group && this.entity.group.length > 0) {
+            this.inGroup = {};
+            for (const speaker of this.entityData.attributes.sonos_group) {
+                if (speaker !== this.entity.entity) {
+                    this.inGroup[speaker] = true;
+                }
+            }
+        }
 
 
     }
@@ -42,14 +59,23 @@ export class MediaModalPage implements OnInit {
         //select_source
     }
 
-    //Join player
-    joinPlayer() {
-        //sonos //join
+    // Join player
+    joinPlayer(speakerEntity) {
+        console.log('join', speakerEntity);
+        callService(this.connection, 'sonos', 'join', {
+            master: this.entity.entity,
+            entity_id: speakerEntity
+        });
+        this.loading = true;
     }
 
-    //Unjoin player
-    unjoinPlayer() {
-        //sonos //unjoin
+    // Unjoin player
+    unjoinPlayer(speakerEntity) {
+        console.log('unjoin', speakerEntity);
+        callService(this.connection, 'sonos', 'unjoin', {
+            entity_id: speakerEntity
+        });
+        this.loading = true;
     }
 
     playPauseAction() {

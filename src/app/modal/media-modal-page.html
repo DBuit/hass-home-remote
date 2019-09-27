@@ -6,14 +6,12 @@
     </ion-toolbar>
 </ion-header>
 <div class="modal-page">
-    <div class="icon" [class.on]="entityData.state == 'playing'">
-        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon[entityData.state] }}"></span>
-    </div>
-    <h4>{{ entityData.state }}</h4>
-
+<!--    <div class="icon" [class.on]="entityData.state == 'playing'">-->
+<!--        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon[entityData.state] }}"></span>-->
+<!--    </div>-->
+<!--    <h4>{{ entityData.state }}</h4>-->
 
     <div id="project-container">
-        <div id="overlay"></div>
         <div id="content">
             <h2>{{ entityData.attributes.media_artist }}</h2>
             <h3>{{ entityData.attributes.media_title }}</h3>
@@ -28,12 +26,18 @@
         </div>
     </div>
 
+    <div id="group" *ngIf="entity.group && entity.group.length > 0">
+        <ul>
+            <li *ngFor="let speaker of entity.group">{{ speaker.name }} <span class="mdi mdi-plus-box" *ngIf="!inGroup[speaker.entity]" (click)="joinPlayer(speaker.entity)"></span><span class="mdi mdi-minus-box" *ngIf="inGroup[speaker.entity]" (click)="unjoinPlayer(speaker.entity)"></span></li>
+        </ul>
+    </div>
 
 
 
 
-    <p style="color:#FFF;">
-        {{ entityData | json }}
-    </p>
+
+<!--    <p style="color:#FFF;">-->
+<!--        {{ entityData | json }}-->
+<!--    </p>-->
 
 </div>
