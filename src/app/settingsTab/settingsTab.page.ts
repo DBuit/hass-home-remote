@@ -16,6 +16,8 @@ export class SettingsTabPage {
   configuration: object;
   configurationString: string;
   configurationUrl: string;
+  idleEnabled: boolean = true;
+  idleTime: number = 20;
 
   constructor(public settingsService: SettingsService, public router: Router, public toastController: ToastController, private http: HttpClient, public loadingController: LoadingController) { }
 
@@ -24,6 +26,8 @@ export class SettingsTabPage {
     this.token = await this.settingsService.get('token');
     this.configuration = await this.settingsService.get('configuration');
     this.configurationUrl = await this.settingsService.get('configurationUrl');
+    this.idleEnabled = await this.settingsService.get('idleEnabled');
+    this.idleTime = await this.settingsService.get('idleTime');
     this.configurationString = JSON.stringify(this.configuration, undefined, 4);
   }
 
@@ -36,6 +40,8 @@ export class SettingsTabPage {
       await this.settingsService.set('url', this.url);
       await this.settingsService.set('token', this.token);
       await this.settingsService.set('configurationUrl', this.configurationUrl);
+      await this.settingsService.set('idleEnabled', this.idleEnabled);
+    await this.settingsService.set('idleTime', this.idleTime);
 
       const toast = await this.toastController.create({
         message: 'Settings saved.',

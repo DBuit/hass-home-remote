@@ -27,19 +27,29 @@
           <ion-input required type="text" name="configurationUrl" [(ngModel)]="configurationUrl"></ion-input>
         </ion-item>
 
+        <ion-item>
+          <ion-label>Enable screensaver after idle</ion-label>
+          <ion-checkbox slot="start" name="idleEnabled" [(ngModel)]="idleEnabled"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Enable screensaver after seconds <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="number" name="idleTime" [(ngModel)]="idleTime"></ion-input>
+        </ion-item>
+
         <div class="ion-padding">
           <ion-button expand="block" type="button" class="ion-no-margin" (click)="getConfiguration()">download/update json configuration</ion-button>
         </div>
-
-        <ion-item>
-          <ion-label position="stacked">Configuration (JSON)</ion-label>
-          <ion-textarea auto-grow="true" disabled readonly name="configurationString" [(ngModel)]="configurationString"></ion-textarea>
-        </ion-item>
       </ion-list>
 
       <div class="ion-padding">
         <ion-button expand="block" type="submit" class="ion-no-margin">Save settings</ion-button>
       </div>
+
+      <ion-item>
+        <ion-label position="stacked">Configuration downloaded (Preview)</ion-label>
+        <ion-textarea auto-grow="true" disabled readonly name="configurationString" [(ngModel)]="configurationString"></ion-textarea>
+      </ion-item>
     </form>
 
 </ion-content>
