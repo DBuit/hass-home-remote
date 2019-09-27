@@ -6,9 +6,34 @@
     </ion-toolbar>
 </ion-header>
 <div class="modal-page">
-    <div class="icon" [class.on]="this.entityData.state == 'playing'">
+    <div class="icon" [class.on]="entityData.state == 'playing'">
         <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon[entityData.state] }}"></span>
     </div>
-    <h4>{{ this.entityData.state }}</h4>
+    <h4>{{ entityData.state }}</h4>
+
+
+    <div id="project-container">
+        <div id="overlay"></div>
+        <div id="content">
+            <h2>{{ entityData.attributes.media_artist }}</h2>
+            <h3>{{ entityData.attributes.media_title }}</h3>
+            <input type="range" [value]="volume" min="0" max="100" />
+            <div id="controls">
+                <div class="column"><i class="mdi" aria-hidden="true"></i></div>
+                <div class="column"><i class="mdi mdi-skip-previous" aria-hidden="true"></i></div>
+                <div class="column" (click)="playPauseAction()"><i class="mdi" [ngClass]="(entityData.state == 'playing')?'mdi-stop':'mdi-play'" aria-hidden="true"></i></div>
+                <div class="column"><i class="mdi mdi-skip-next" aria-hidden="true"></i></div>
+                <div class="column" [class.active]="entityData.attributes.shuffle"><i class="mdi mdi-shuffle" aria-hidden="true"></i></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <p style="color:#FFF;">
+        {{ entityData | json }}
+    </p>
 
 </div>
