@@ -3,6 +3,7 @@ import {callService} from 'home-assistant-js-websocket';
 import { timer } from 'rxjs';
 import {ModalController} from '@ionic/angular';
 import { SettingsService } from '../service/settings.service';
+import {CameraModalPage} from '../modal/camera.modal.page';
 
 @Component({
   selector: 'camera-tile',
@@ -57,9 +58,21 @@ export class CameraTileComponent implements OnInit, OnChanges {
   }
 
   hold(entity) {
-    console.log('hold');
+    this.cameraModal(entity);
   }
 
+  async cameraModal(entity) {
+    const modal = await this.modalController.create({
+      component: CameraModalPage,
+      cssClass: 'custom-modal-css',
+      componentProps: {
+        'entity': entity,
+        'entityData': this.entityData,
+        'connection': this.connection
+      }
+    });
+    await modal.present();
+  }
 
 
 }

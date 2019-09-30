@@ -22,7 +22,6 @@ export class BlindsTileComponent implements OnInit, OnChanges {
     }
     if (changes['entities']) {
       this.entities = changes['entities'].currentValue;
-
     }
     if (changes['connection']) {
       this.connection = changes['connection'].currentValue;
@@ -32,7 +31,6 @@ export class BlindsTileComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   hold(entity) {
-    console.log('hold');
     this.blindModal(entity);
   }
 
@@ -46,10 +44,7 @@ export class BlindsTileComponent implements OnInit, OnChanges {
         'connection': this.connection
       }
     });
-    console.log(modal);
     await modal.present();
-
-    console.log('presented');
   }
 
   blindState(entity) {

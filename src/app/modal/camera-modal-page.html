@@ -1,0 +1,16 @@
+<ion-header class="modal-header">
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (tap)="dismissModal()"><span class="mdi mdi-close"></span></ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<div class="modal-page">
+    <div class="icon on">
+        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+    </div>
+    <h4>{{ entity.name }}</h4>
+
+    <img [src]="streamUrl" />
+
+</div>

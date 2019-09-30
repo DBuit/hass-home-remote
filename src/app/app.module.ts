@@ -18,13 +18,14 @@ import { BrightnessModalPage } from './modal/brightness.modal.page';
 import { BlindModalPage } from './modal/blind.modal.page';
 import { SwitchModalPage } from './modal/switch.modal.page';
 import { MediaModalPage } from './modal/media.modal.page';
+import { CameraModalPage } from './modal/camera.modal.page';
 
-//Screensaver
+// Screensaver
 import { ScreensaverTimerDirective } from './screensaver-timer.directive';
 
 @NgModule({
-  declarations: [AppComponent, BrightnessModalPage, BlindModalPage, SwitchModalPage, ScreensaverTimerDirective, MediaModalPage],
-  entryComponents: [BrightnessModalPage, BlindModalPage, SwitchModalPage, MediaModalPage],
+  declarations: [AppComponent, BrightnessModalPage, BlindModalPage, SwitchModalPage, ScreensaverTimerDirective, MediaModalPage, CameraModalPage],
+  entryComponents: [BrightnessModalPage, BlindModalPage, SwitchModalPage, MediaModalPage, CameraModalPage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})],
   providers: [
     StatusBar,
