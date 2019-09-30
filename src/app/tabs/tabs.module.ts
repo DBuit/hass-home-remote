@@ -14,7 +14,7 @@ import { EntityTabPage } from "../entityTab/entityTab.page";
 // Tile
 import { TileComponent } from "../tile/tile.component";
 import { BlindsTileComponent } from "../blinds-tile/blinds-tile.component";
-
+import { CameraTileComponent } from '../camera-tile/camera-tile.component';
 
 @NgModule({
   imports: [
@@ -23,7 +23,7 @@ import { BlindsTileComponent } from "../blinds-tile/blinds-tile.component";
     FormsModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage, SettingsTabPage, EntityTabPage, TileComponent, BlindsTileComponent],
+  declarations: [TabsPage, SettingsTabPage, EntityTabPage, TileComponent, BlindsTileComponent, CameraTileComponent],
   providers: [RedirectGuard]
 })
 export class TabsPageModule {}

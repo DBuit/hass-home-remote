@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SettingsService } from "../service/settings.service";
+import { SettingsService } from '../service/settings.service';
 import { ToastController, LoadingController } from '@ionic/angular';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 

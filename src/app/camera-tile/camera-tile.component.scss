@@ -1,0 +1,140 @@
+.button {
+  cursor: pointer;
+  display:inline-block;
+  width: 330px;
+  height: auto;
+  padding:5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  margin: 3px;
+  position: relative;
+  overflow:hidden;
+  font-weight:300;
+  touch-action: auto!important;
+}
+
+
+
+.button:last-child {
+  margin-right:13px;
+}
+
+.button.on {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.button-inner {
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+
+.name {
+  display:block;
+  font-size: 18px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.4);
+  width: 100px;
+  padding-top:5px;
+  line-height:40px;
+}
+
+.name.on {
+  color: rgba(0, 0, 0, 1);
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  height:45px;
+}
+
+.state {
+  position: relative;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.4);
+  float: left;
+  white-space: normal;
+}
+
+.value {
+  visibility: hidden;
+}
+
+.value.on {
+  visibility: visible;
+  position: relative;
+  margin-left: 5px;
+  font-size: 12px;
+  color: rgba(255, 0, 0, 1);
+  text-transform: capitalize;
+}
+
+.state.on {
+  color: rgba(0, 0, 0, 1);
+}
+.state.unavailable {
+  color: rgba(255, 0, 0, 1);
+}
+
+.icon {
+  display:block;
+  height: 40px;
+  width: 40px;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 30px;
+  padding-top:5px;
+}
+
+.icon.on {
+  color: #f7d959;
+}
+
+.circle {
+  position: absolute;
+  top: 17px;
+  left: 10px;
+  height: 35px;
+  width: 35px;
+  background-color: rgba(0, 255, 0, 1);
+  border-radius: 20px;
+}
+
+.temp {
+  position: absolute;
+  top: 26px;
+  left: 19px;
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+}
+
+.not-found {
+  cursor: pointer;
+  float: left;
+  width: 110px;
+  height: 110px;
+  background-color: rgba(255, 0, 0, 1);
+  border-radius: 12px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+  margin: 3px;
+  position: relative;
+}
+
+.spin {
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

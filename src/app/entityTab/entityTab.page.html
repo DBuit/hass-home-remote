@@ -26,9 +26,11 @@
 
                             <ng-template ngFor let-entity [ngForOf]="entityrow">
 
-                                <tile *ngIf="entity.type != 'blinds'" [connection]="connection" [entityData]="entities[entity.entity]" [entity]="entity"></tile>
+                                <tile *ngIf="entity.type != 'blinds' && entity.type != 'camera'" [connection]="connection" [entityData]="entities[entity.entity]" [entity]="entity"></tile>
 
                                 <blinds-tile *ngIf="entity.type == 'blinds'" [connection]="connection" [entities]="entities" [entity]="entity"></blinds-tile>
+
+                                <camera-tile *ngIf="entity.type == 'camera'" [connection]="connection" [entityData]="entities[entity.entity]" [entity]="entity"></camera-tile>
 
                             </ng-template>
 

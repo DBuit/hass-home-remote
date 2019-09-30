@@ -1,0 +1,14 @@
+<!-- Camera -->
+<div class="button on">
+  <div class="button-inner">
+      <div class="row">
+          <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : '' }">
+            <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+          </span>
+          <span class="name on">{{ entity.name }}</span>
+      </div>
+      <span class="state on">
+        <img [src]="pictureUrl" />
+    </span>
+  </div>
+</div>
