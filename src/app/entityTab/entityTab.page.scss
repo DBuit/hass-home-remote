@@ -35,6 +35,17 @@ ion-grid {
       font-weight:300;
     }
   }
+
+  .settingsIcon {
+    color: #FFF;
+    float: right;
+    margin-right: 30px;
+    font-size: 20px;
+    margin-top: -30px;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
 }
 
 ion-col {

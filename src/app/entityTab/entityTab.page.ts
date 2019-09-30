@@ -19,14 +19,14 @@ export class EntityTabPage {
   index: string;
   home: boolean = false;
   unusedEntitiesForStats: any[] = [];
-  title: string = "";
+  title: string;
   homeStats: any = {
-    'light': null,
-    'media_player': null
+    light: null,
+    media_player: null,
+    notes: []
   };
 
-  constructor(public modalController: ModalController, private route: ActivatedRoute, private router: Router, public webSocketService: WebsocketService, public settingsService: SettingsService) {
-  }
+  constructor(public modalController: ModalController, private route: ActivatedRoute, private router: Router, public webSocketService: WebsocketService, public settingsService: SettingsService) {}
 
   async checkSettings() {
     let url = await this.settingsService.get('url');
@@ -35,13 +35,13 @@ export class EntityTabPage {
   }
 
   async ngOnInit() {
-    if(await this.checkSettings()) {
+    if (await this.checkSettings()) {
       this.connect();
       this.index = this.route.snapshot.paramMap.get('index');
       this.configuration = await this.settingsService.get('configuration');
       this.setup = this.configuration[this.index].content;
 
-      if(this.configuration[this.index].type && this.configuration[this.index].type == 'home') {
+      if (this.configuration[this.index].type && this.configuration[this.index].type == 'home') {
         this.home = true;
         this.unusedEntitiesForStats = this.configuration[this.index].unusedEntitiesForStats;
         if(this.configuration[this.index].title) {
@@ -62,28 +62,57 @@ export class EntityTabPage {
     this.loading = false;
     subscribeEntities(this.connection, entities => {
       this.entities = entities;
-      if(this.home) {
+      if (this.home) {
         let countLight = 0;
         let countMediaplayer = 0;
-        for(let key in entities) {
-          if(key.includes('light.') && !this.unusedEntitiesForStats.includes(key)) {
-            if(entities[key].state == 'on') {
+        for (const key in entities) {
+          if (key.includes('light.') && !this.unusedEntitiesForStats.includes(key)) {
+            if (entities[key].state == 'on') {
               countLight++;
             }
-            if(countLight > 0) {
+            if (countLight > 0) {
               this.homeStats.light = countLight + ' lights on';
             } else {
               this.homeStats.light = null;
             }
           }
-          if(key.includes('media_player.') && !this.unusedEntitiesForStats.includes(key)) {
-            if(entities[key].state == 'playing') {
+          if (key.includes('media_player.') && !this.unusedEntitiesForStats.includes(key)) {
+            if (entities[key].state == 'playing') {
               countMediaplayer++;
             }
-            if(countMediaplayer > 0) {
+            if (countMediaplayer > 0) {
               this.homeStats.media_player = countMediaplayer + ' speakers are on';
             } else {
               this.homeStats.media_player = null;
+            }
+          }
+
+        }
+
+        this.homeStats.notes = [];
+        for(const note of this.configuration[this.index].notes) {
+          console.log(note);
+
+          console.log(entities[note.entity]);
+          for (const condition of note.conditions) {
+            console.log(condition);
+            let conditionState = false;
+            switch (condition.type) {
+              case 'contains': {
+                if (entities[note.entity].state.toLowerCase().includes(condition.check)) {
+                  conditionState = true;
+                }
+                break;
+              }
+              case 'equals': {
+                if (entities[note.entity].state.toLowerCase() == condition.check) {
+                  conditionState = true;
+                }
+                break;
+              }
+            }
+            if(conditionState) {
+              this.homeStats.notes.push(condition.message);
             }
           }
         }

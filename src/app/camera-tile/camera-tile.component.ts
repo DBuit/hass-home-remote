@@ -46,14 +46,12 @@ export class CameraTileComponent implements OnInit, OnChanges {
 
   interval() {
     timer(this.refreshRate * 1000, this.refreshRate * 1000).subscribe((res) => {
-      console.log('Interval');
       this.refreshImage();
       this.interval();
     });
   }
 
   refreshImage() {
-    console.log('refresh camera image');
     this.pictureUrl = this.url + this.entityData.attributes.entity_picture + '&t=' + new Date().getTime();
   }
 
