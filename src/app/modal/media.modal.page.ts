@@ -32,7 +32,7 @@ export class MediaModalPage implements OnInit {
         this.loading = false;
         this.volume = this.entityData.attributes.volume_level * 100;
 
-        if (this.entity.group && this.entity.group.length > 0) {
+        if (this.entity.group) {
             this.inGroup = {};
             for (const speaker of this.entityData.attributes.sonos_group) {
                 if (speaker !== this.entity.entity) {

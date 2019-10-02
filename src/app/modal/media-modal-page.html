@@ -26,9 +26,9 @@
         </div>
     </div>
 
-    <div id="group" *ngIf="entity.group && entity.group.length > 0">
+    <div id="group" *ngIf="entity.group">
         <ul>
-            <li *ngFor="let speaker of entity.group">{{ speaker.name }} <span class="mdi mdi-plus-box" *ngIf="!inGroup[speaker.entity]" (click)="joinPlayer(speaker.entity)"></span><span class="mdi mdi-minus-box" *ngIf="inGroup[speaker.entity]" (click)="unjoinPlayer(speaker.entity)"></span></li>
+            <li *ngFor="let speakerObject of entity.group | keyvalue">{{ speakerObject.value }} <span class="mdi mdi-plus-box" *ngIf="!inGroup[speakerObject.key]" (click)="joinPlayer(speakerObject.key)"></span><span class="mdi mdi-minus-box" *ngIf="inGroup[speakerObject.key]" (click)="unjoinPlayer(speakerObject.key)"></span></li>
         </ul>
     </div>
 

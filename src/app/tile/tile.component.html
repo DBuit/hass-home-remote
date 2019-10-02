@@ -66,7 +66,17 @@
         <span class="icon" [class.on]="entityData.state == 'playing'" [ngStyle]="{'color':entity.color && entityData.state == 'playing' ? entity.color : '' }">
           <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon[entityData.state] }}"></span>
         </span>
-        <span class="name" [class.on]="entityData.state == 'playing'">{{ entity.name }}</span>
+        <span class="speakergroup" *ngIf="entityData.attributes.sonos_group.length > 1">
+          <span class="mdi mdi-speaker-multiple"></span>
+        </span>
+        <span class="name" [class.on]="entityData.state == 'playing'">
+          {{ entity.name }}
+          <ng-template [ngIf]="entity.group">
+            <ng-template ngFor let-speaker [ngForOf]="entityData.attributes.sonos_group">
+              {{ entity.group[speaker] }}
+            </ng-template>
+          </ng-template>
+        </span>
         <span class="state" [class.on]="entityData.state == 'playing'">{{ entityData.state }}</span>
       </div>
     </div>

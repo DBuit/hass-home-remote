@@ -30,7 +30,7 @@
 
 .name {
   display:block;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.4);
   width: 100px;
@@ -40,6 +40,7 @@
   -webkit-box-orient: vertical;
   word-wrap:break-word;
   overflow: hidden;
+  white-space: normal;
 }
 
 .name.on {
@@ -48,7 +49,7 @@
 
 .state {
   position: relative;
-  font-size: 18px;
+  font-size: 17px;
   color: rgba(0, 0, 0, 0.4);
   text-transform: capitalize;
   float: left;
@@ -81,6 +82,15 @@
   color: rgba(0, 0, 0, 0.3);
   font-size: 30px;
   padding-top:5px;
+}
+
+.speakergroup {
+  display: block;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 20px;
+  position: absolute;
+  top: 15px;
+  right: 10px;
 }
 
 .icon.on {
