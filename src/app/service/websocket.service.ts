@@ -17,7 +17,7 @@ export class WebsocketService {
   url: string;
   token: string;
   intervalTime: any;
-  pinged: false;
+  pinged: boolean = false;
 
 
   constructor(public loadingController: LoadingController, public settingsService: SettingsService, public router: Router) {
@@ -79,7 +79,7 @@ export class WebsocketService {
             console.log("PINGED!")
         });
 
-        this.resetTimer
+        this.resetPingTimer();
       } else {
         console.log('NO PONG');
         this.intervalTime.unsubscribe();
