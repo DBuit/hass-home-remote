@@ -15,13 +15,13 @@
         <div id="content">
             <h2>{{ entityData.attributes.media_artist }}</h2>
             <h3>{{ entityData.attributes.media_title }}</h3>
-            <input type="range" [value]="volume" min="0" max="100" />
+            <input type="range" [value]="volume" min="0" max="100" #ref (change)="updateVolume(ref.value)" />
             <div id="controls">
-                <div class="column"><i class="mdi" aria-hidden="true"></i></div>
+                <!-- <div class="column"><i class="mdi" aria-hidden="true"></i></div> -->
                 <div class="column"><i class="mdi mdi-skip-previous" aria-hidden="true"></i></div>
                 <div class="column" (click)="playPauseAction()"><i class="mdi" [ngClass]="(entityData.state == 'playing')?'mdi-stop':'mdi-play'" aria-hidden="true"></i></div>
                 <div class="column"><i class="mdi mdi-skip-next" aria-hidden="true"></i></div>
-                <div class="column" [class.active]="entityData.attributes.shuffle"><i class="mdi mdi-shuffle" aria-hidden="true"></i></div>
+                <!-- <div class="column" [class.active]="entityData.attributes.shuffle"><i class="mdi mdi-shuffle" aria-hidden="true"></i></div> -->
             </div>
         </div>
     </div>

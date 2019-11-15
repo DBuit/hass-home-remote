@@ -98,7 +98,19 @@ export class MediaModalPage implements OnInit {
         });
     }
 
-    setVolume() {
-        //volume_set
+    updateVolume(volume) {
+      let volumeFloat = volume/100;
+
+      callService(this.connection, 'media_player', 'volume_set', {
+          entity_id: this.entity.entity,
+          volume_level: volumeFloat
+      });
+
+      for(let speakerEntity in this.inGroup) {
+        callService(this.connection, 'media_player', 'volume_set', {
+            entity_id: speakerEntity,
+            volume_level: volumeFloat
+        });
+      }
     }
 }
