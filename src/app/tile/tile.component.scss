@@ -1,3 +1,4 @@
+
 .button {
   cursor: pointer;
   display:inline-block;
@@ -14,7 +15,7 @@
   touch-action: auto!important;
 }
 
-.button:last-child {
+:host:last-child .button {
   margin-right:13px;
 }
 
