@@ -34,9 +34,11 @@ export class ScreensaverTimerDirective {
 
   async init() {
     const customEnabled = await this.settingsService.get('idleEnabled');
+    console.log('customEnabled',customEnabled);
     if (customEnabled == true || customEnabled == false) {
       this.enabled = customEnabled;
     }
+    console.log('enabled',this.enabled);
 
     if (this.enabled) {
       const customIdleTime = await this.settingsService.get('idleTime');

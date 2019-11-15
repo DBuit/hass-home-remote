@@ -91,11 +91,11 @@ export class EntityTabPage {
 
         this.homeStats.notes = [];
         for(const note of this.configuration[this.index].notes) {
-          console.log(note);
+          //console.log(note);
 
-          console.log(entities[note.entity]);
+          //console.log(entities[note.entity]);
           for (const condition of note.conditions) {
-            console.log(condition);
+            //console.log(condition);
             let conditionState = false;
             switch (condition.type) {
               case 'contains': {

@@ -4,6 +4,7 @@ import {createSocket} from "../customsocket";
 import { LoadingController } from '@ionic/angular';
 import { SettingsService } from "./settings.service";
 import { Router } from '@angular/router';
+import { timer } from 'rxjs';
 
 
 @Injectable({
@@ -15,6 +16,9 @@ export class WebsocketService {
   reconnectLoading: any;
   url: string;
   token: string;
+  intervalTime: any;
+  pinged: false;
+
 
   constructor(public loadingController: LoadingController, public settingsService: SettingsService, public router: Router) {
 
@@ -60,17 +64,53 @@ export class WebsocketService {
 
     this.connection.addEventListener("disconnected", this.reconnecting);
     this.connection.addEventListener("ready", this.eventHandler);
+
+    this.pingTimer();
+  }
+
+  pingTimer() {
+    this.intervalTime = timer(5000, 5000).subscribe((res) => {
+      console.log('pingTimer');
+      console.log('start ping');
+      if(!this.pinged) {
+        this.pinged = true;
+        this.connection.ping().then(() => {
+            this.pinged = false;
+            console.log("PINGED!")
+        });
+
+        this.resetTimer
+      } else {
+        console.log('NO PONG');
+        this.intervalTime.unsubscribe();
+        this.connection.close();
+        this.pinged = false;
+        this.connect();
+      }
+    });
+
+  }
+
+  resetPingTimer() {
+    this.intervalTime.unsubscribe();
+    this.pingTimer();
+  }
+
+  async test(connection, data) {
+    alert('CLOSED');
   }
 
   async reconnecting(connection, data) {
     console.log("Reconnecting");
     console.log(connection);
     console.log(data);
+    console.log(this);
 
     let loading = await this.loadingController.create({
       message: 'Please wait...',
       id: 'reconnect'
     });
+    console.log(loading);
     await loading.present();
   }
 
