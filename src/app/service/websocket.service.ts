@@ -71,12 +71,12 @@ export class WebsocketService {
   pingTimer() {
     this.intervalTime = timer(15000, 15000).subscribe((res) => {
       console.log('pingTimer');
-      console.log('start ping');
       if(!this.pinged) {
         this.pinged = true;
+        console.log('PING');
         this.connection.ping().then(() => {
             this.pinged = false;
-            console.log("PINGED!")
+            console.log("PONG!")
         });
 
         this.resetPingTimer();
