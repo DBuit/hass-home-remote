@@ -69,7 +69,7 @@ export class WebsocketService {
   }
 
   pingTimer() {
-    this.intervalTime = timer(5000, 5000).subscribe((res) => {
+    this.intervalTime = timer(15000, 15000).subscribe((res) => {
       console.log('pingTimer');
       console.log('start ping');
       if(!this.pinged) {
