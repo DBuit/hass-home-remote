@@ -1,0 +1,24 @@
+<div class="md hydrated">
+  <div  *ngIf="message">
+    <div class="toast-wrapper toast-bottom" style="bottom: calc(8px + var(--ion-safe-area-bottom, 0px));">
+        <div class="toast-container">
+            <div class="toast-button-group toast-button-group-start" *ngIf="refresh">
+                <button type="button" class="toast-button ion-focusable ion-activatable">
+                    <div class="toast-button-inner">Refresh</div>
+                    <ion-ripple-effect role="presentation" class="md hydrated"></ion-ripple-effect>
+                </button>
+            </div>
+            <div class="toast-content">
+                <div class="toast-header">{{ header }}</div>
+                <div class="toast-message">{{ message }}</div>
+            </div>
+            <div class="toast-button-group toast-button-group-end" *ngIf="close">
+                <button type="button" class="toast-button toast-button-cancel ion-focusable ion-activatable">
+                    <div class="toast-button-inner">Close</div>
+                    <ion-ripple-effect role="presentation" class="md hydrated"></ion-ripple-effect>
+                </button>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,116 @@
+:host {
+  left: 0px;
+  top: 0px;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: #f2f2f2;
+  contain: strict;
+  z-index: 1000;
+  pointer-events: none;
+}
+.toast-wrapper {
+  display: block;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  padding: 0 15px;
+    z-index: 10;
+}
+.toast-container, .toast-content {
+    display: flex;
+}
+.toast-container {
+    background: #333;
+    border-radius: 4px;
+    align-items: center;
+    pointer-events: auto;
+    contain: content;
+}
+.toast-button-group-start {
+    margin-left: unset;
+    margin-inline-start: 8px;
+}
+.toast-button-group-start {
+    margin-left: 8px;
+}
+.toast-button-group {
+    display: flex;
+}
+
+
+.toast-content {
+    padding-left: unset;
+    padding-right: unset;
+    padding-inline-start: 16px;
+    padding-inline-end: 16px;
+}
+.toast-content {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+.toast-content {
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1 0%;
+}
+.toast-button-group-end {
+    margin-right: unset;
+    margin-inline-end: 8px;
+}
+.toast-button-group-end {
+    margin-right: 8px;
+}
+.toast-button-group {
+    display: flex;
+}
+.toast-button {
+    padding-left: unset;
+    padding-right: unset;
+    padding-inline-start: 15px;
+    padding-inline-end: 15px;
+}
+.toast-button {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+    background-color: transparent;
+    font-family: var(--ion-font-family);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.84px;
+    text-transform: uppercase;
+    overflow: hidden;
+}
+.toast-button {
+    color: #3880ff;
+    z-index: 0;
+    border-width: 0px;
+    border-style: initial;
+    border-color: initial;
+    border-image: initial;
+    outline: none;
+}
+.toast-button-inner {
+    display: flex;
+    align-items: center;
+}
+.toast-button-cancel {
+    color: #e6e6e6;
+}
+.toast-header, .toast-message {
+    line-height: 20px;
+}
+.toast-header {
+    margin-bottom: 2px;
+    font-weight: 500;
+}
+.toast-message {
+    white-space: pre-wrap;
+    flex: 1 1 0%;
+}

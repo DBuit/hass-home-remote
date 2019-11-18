@@ -13,6 +13,8 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage';
 
+import { ToastMessageComponent } from './toast-message.component';
+
 // Modals
 import { BrightnessModalPage } from './modal/brightness.modal.page';
 import { BlindModalPage } from './modal/blind.modal.page';
@@ -24,8 +26,8 @@ import { CameraModalPage } from './modal/camera.modal.page';
 import { ScreensaverTimerDirective } from './screensaver-timer.directive';
 
 @NgModule({
-  declarations: [AppComponent, BrightnessModalPage, BlindModalPage, SwitchModalPage, ScreensaverTimerDirective, MediaModalPage, CameraModalPage],
-  entryComponents: [BrightnessModalPage, BlindModalPage, SwitchModalPage, MediaModalPage, CameraModalPage],
+  declarations: [AppComponent, BrightnessModalPage, BlindModalPage, SwitchModalPage, ScreensaverTimerDirective, MediaModalPage, CameraModalPage, ToastMessageComponent],
+  entryComponents: [BrightnessModalPage, BlindModalPage, SwitchModalPage, MediaModalPage, CameraModalPage, ToastMessageComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, IonicStorageModule.forRoot(), ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})],
   providers: [
     StatusBar,

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Auth, ConnectionOptions, Connection, subscribeConfig } from "home-assistant-js-websocket";
 import {createSocket} from "../customsocket";
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { SettingsService } from "./settings.service";
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
-
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,7 @@ export class WebsocketService {
   intervalTime: any;
   pinged: boolean = false;
 
-
-  constructor(public loadingController: LoadingController, public settingsService: SettingsService, public router: Router) {
+  constructor(public loadingController: LoadingController, public settingsService: SettingsService, public router: Router, public toastService: ToastService) {
 
   }
 
@@ -34,11 +33,10 @@ export class WebsocketService {
   }
 
   async connect() {
-    let loading = await this.loadingController.create({
-      message: 'Please wait...'
-    });
-
-    await loading.present();
+    // let loading = await this.loadingController.create({
+    //   message: 'Please wait...'
+    // });
+    this.toastService.sendToast('Ha connection', 'Please wait...', true, false, 0);
 
     let expires = new Date().getTime() + 1e11;
     const defaultConnectionOptions: ConnectionOptions = {
@@ -60,10 +58,8 @@ export class WebsocketService {
 
     const socket = await connOptions.createSocket(connOptions);
     this.connection = await new Connection(socket, connOptions);
-    loading.dismiss();
-
-    this.connection.addEventListener("disconnected", this.reconnecting);
-    this.connection.addEventListener("ready", this.eventHandler);
+    this.connection.addEventListener("disconnected", this.reconnecting(this.connection, this));
+    this.connection.addEventListener("ready", this.connectionReady(this.connection, this));
 
     this.pingTimer();
   }
@@ -83,7 +79,6 @@ export class WebsocketService {
       } else {
         console.log('NO PONG');
         this.intervalTime.unsubscribe();
-        this.connection.close();
         this.pinged = false;
         this.connect();
       }
@@ -96,29 +91,13 @@ export class WebsocketService {
     this.pingTimer();
   }
 
-  async test(connection, data) {
-    alert('CLOSED');
-  }
-
   async reconnecting(connection, data) {
     console.log("Reconnecting");
-    console.log(connection);
-    console.log(data);
-    console.log(this);
-
-    let loading = await this.loadingController.create({
-      message: 'Please wait...',
-      id: 'reconnect'
-    });
-    console.log(loading);
-    await loading.present();
+    this.toastService.sendToast('Ha connection', 'Reconnecting...', true, false, 0);
   }
 
-  async eventHandler(connection, data) {
-    console.log(data);
+  async connectionReady(connection, data) {
     console.log("Connection has been established again");
-    console.log(connection);
-    await this.loadingController.dismiss({id: 'reconnect'})
-
+    this.toastService.sendToast('Ha connection', 'Connection has been established again', false, true, 2000);
   }
 }

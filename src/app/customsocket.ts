@@ -72,6 +72,7 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
             // Reject if we no longer have to retry
             if (triesLeft === 0) {
                 // We never were connected and will not retry
+                window.location.reload();
                 promReject(ERR_CANNOT_CONNECT);
                 return;
             }
