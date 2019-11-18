@@ -48,11 +48,11 @@ export class ToastMessageComponent implements OnDestroy {
     this.duration = 0;
   }
 
-  close() {
+  closeToast() {
     this.reset();
   }
 
-  refresh() {
+  refreshToast() {
     window.location.reload();
   }
 
