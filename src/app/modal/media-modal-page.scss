@@ -69,58 +69,57 @@
         text-overflow: ellipsis;
       }
 
-      input {
-        width: 100%;
-        height: 2px;
-        margin: 0 0 15px 0;
-        background: -moz-linear-gradient(left, #3498db 0%, #9b59b6 72%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(left, #3498db 0%,#9b59b6 72%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to right, #3498db 0%,#9b59b6 72%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        -webkit-appearance: none;
-        -moz-appearance:    none;
-        appearance:         none;
-
-        &::-webkit-slider-thumb {
-          -webkit-appearance: none;
+      .range-wrapper {
+        width:100%;
+        padding:0 10px;
+        input {
+          width: 100%;
           height: 8px;
-          width: 8px;
-          border-radius: 10px;
-          background: #ffffff;
-          cursor: pointer;
+          margin: 0 0 15px 0;
+          background: #f7d959;
+          border-radius: 4px;
+          -webkit-appearance: none;
+          -moz-appearance:    none;
+          appearance:         none;
+
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 25px;
+            width: 25px;
+            border-radius: 100%;
+            background: #ffffff;
+            cursor: pointer;
+          }
         }
       }
 
       #controls {
-        height: 50px;
         display: flex;
         display: -webkit-flex;
         -webkit-align-items: center;
         align-items: center;
         -webkit-justify-content: center;
-        justify-content: center;
+        justify-content: space-around;
+        
 
         .column {
           float: left;
-
-          &:nth-child(even) {
-            font-size: 1.3em;
-          }
-
-          &:nth-child(n+2):nth-child(-n+4) {
-            color: white !important;
-          }
-
-          &:nth-child(3) {
-            font-size: 2em;
-          }
-
           &.active {
             color: #f7d959;
           }
 
           i {
-            margin: 0 15px;
             cursor: pointer;
+            font-size: 2.3em;
+            border: 2px solid #FFF;
+            border-radius: 100%;
+            width: 50px;
+            height: 50px;
+            margin: 0;
+            display: block;
+            line-height: 47px;
+            text-align: center;
+            margin: 15px 0;
           }
         }
       }
@@ -147,15 +146,16 @@
       z-index: 3;
       li {
         color:#FFF;
-        display:block;
+        display:flex;
         font-size: 18px;
         padding: 5px 15px;
-        line-height:25px;
+        align-items: center;
         span {
           cursor:pointer;
           float:right;
           display:block;
-          font-size:25px;
+          font-size:2.3rem;
+          margin-left:auto;
         }
       }
     }

@@ -6,16 +6,13 @@
     </ion-toolbar>
 </ion-header>
 <div class="modal-page">
-<!--    <div class="icon" [class.on]="entityData.state == 'playing'">-->
-<!--        <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon[entityData.state] }}"></span>-->
-<!--    </div>-->
-<!--    <h4>{{ entityData.state }}</h4>-->
-
     <div id="project-container">
         <div id="content">
             <h2>{{ entityData.attributes.media_artist }}</h2>
             <h3>{{ entityData.attributes.media_title }}</h3>
-            <input type="range" [value]="volume" min="0" max="100" #ref (change)="updateVolume(ref.value)" />
+            <div class="range-wrapper">
+                <input type="range" [value]="volume" min="0" max="100" #ref (change)="updateVolume(ref.value)" />
+            </div>
             <div id="controls">
                 <!-- <div class="column"><i class="mdi" aria-hidden="true"></i></div> -->
                 <div class="column"><i class="mdi mdi-skip-previous" aria-hidden="true"></i></div>
@@ -25,19 +22,9 @@
             </div>
         </div>
     </div>
-
     <div id="group" *ngIf="entity.group">
         <ul>
             <li *ngFor="let speakerObject of entity.group | keyvalue">{{ speakerObject.value }} <span class="mdi mdi-plus-box" *ngIf="!inGroup[speakerObject.key]" (click)="joinPlayer(speakerObject.key)"></span><span class="mdi mdi-minus-box" *ngIf="inGroup[speakerObject.key]" (click)="unjoinPlayer(speakerObject.key)"></span></li>
         </ul>
     </div>
-
-
-
-
-
-<!--    <p style="color:#FFF;">-->
-<!--        {{ entityData | json }}-->
-<!--    </p>-->
-
 </div>
