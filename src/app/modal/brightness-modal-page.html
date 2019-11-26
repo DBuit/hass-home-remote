@@ -10,7 +10,7 @@
             <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
         </div>
         <h4>{{ brightness }}</h4>
-        <div class="range-holder">
+        <div class="range-holder" (click)="dismissModal($event)">
             <input type="range" [value]="brightness" #ref (change)="updateBrightness(ref.value)">
         </div>
         <div class="scene-holder" *ngIf="entity.scenes && entity.scenes.length > 0">

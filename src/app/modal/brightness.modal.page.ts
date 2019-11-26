@@ -49,7 +49,7 @@ export class BrightnessModalPage implements OnInit {
     }
 
     dismissModal($event = null) {
-        if (!$event || ($event.target.className === 'modal-page' || $event.target.localName === 'ion-toolbar')) {
+        if ((!$event) || ($event.target && ($event.target.className === 'modal-page' || $event.target.localName === 'ion-toolbar' || $event.target.className === 'range-holder'))) {
             this.modalController.dismiss();
         }
     }
