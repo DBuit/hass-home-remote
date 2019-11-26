@@ -1,11 +1,11 @@
 <ion-header class="modal-header">
-    <ion-toolbar>
+    <ion-toolbar (click)="dismissModal($event)">
         <ion-buttons slot="end">
             <ion-button (tap)="dismissModal()"><span class="mdi mdi-close"></span></ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<div class="modal-page">
+<div class="modal-page" (click)="dismissModal($event)">
     <div class="icon on">
         <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
     </div>

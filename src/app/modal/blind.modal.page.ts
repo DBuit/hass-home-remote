@@ -1,5 +1,5 @@
 import {Component, Input, SimpleChange, SimpleChanges} from '@angular/core';
-import { callService, Connection } from "home-assistant-js-websocket";
+import { callService, Connection } from 'home-assistant-js-websocket';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -12,7 +12,7 @@ export class BlindModalPage {
     @Input() entity: any;
     @Input() entities: any;
     @Input() connection: any;
-    value: number = 0;
+    value = 0;
 
     constructor(public modalController: ModalController) {
     }
@@ -36,16 +36,17 @@ export class BlindModalPage {
 
     update(value) {
         this.value = value;
-        for(let entity of this.entity.entities) {
-            callService(this.connection, "input_number", "set_value", {
+        for(const entity of this.entity.entities) {
+            callService(this.connection, 'input_number', 'set_value', {
                 entity_id: entity.entity,
                 value: entity.positions[this.value]
             });
         }
     }
 
-    dismissModal() {
-        this.modalController.dismiss();
+    dismissModal($event = null) {
+        if (!$event || ($event.target.className === 'modal-page' || $event.target.localName === 'ion-toolbar')) {
+            this.modalController.dismiss();
+        }
     }
-
 }

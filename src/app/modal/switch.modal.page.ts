@@ -1,5 +1,5 @@
 import {Component, Input, SimpleChange, SimpleChanges} from '@angular/core';
-import { callService, Connection } from "home-assistant-js-websocket";
+import { callService, Connection } from 'home-assistant-js-websocket';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -12,10 +12,10 @@ export class SwitchModalPage  {
     @Input() entity: any;
     @Input() entityData: any;
     @Input() connection: any;
-    value: string = 'off';
+    value = 'off';
     values: any = {
-        'off': 0,
-        'on': 1
+        off: 0,
+        on: 1
     };
     valuesReverted: any = {
         0: 'off',
@@ -26,7 +26,7 @@ export class SwitchModalPage  {
     }
 
     ngOnInit() {
-        if(this.entityData.state) {
+        if (this.entityData.state) {
             this.value = this.entityData.state;
         } else {
             this.value = 'off';
@@ -35,13 +35,14 @@ export class SwitchModalPage  {
 
     update(value) {
         this.value = this.valuesReverted[value];
-        callService(this.connection, "input_boolean", "toggle", {
+        callService(this.connection, 'input_boolean', 'toggle', {
             entity_id: this.entity.entity
         });
     }
 
-    dismissModal() {
-        this.modalController.dismiss();
+    dismissModal($event = null) {
+        if (!$event || ($event.target.className === 'modal-page' || $event.target.localName === 'ion-toolbar')) {
+            this.modalController.dismiss();
+        }
     }
-
 }

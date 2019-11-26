@@ -28,7 +28,9 @@ export class CameraModalPage implements OnInit {
         this.streamUrl = this.url + '/api/camera_proxy_stream/camera.camera?token='+this.entityData.attributes.access_token;
     }
 
-    dismissModal() {
-        this.modalController.dismiss();
+    dismissModal($event = null) {
+        if (!$event || ($event.target.className === 'modal-page' || $event.target.localName === 'ion-toolbar')) {
+            this.modalController.dismiss();
+        }
     }
 }

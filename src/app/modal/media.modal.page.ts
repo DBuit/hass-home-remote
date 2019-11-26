@@ -50,8 +50,10 @@ export class MediaModalPage implements OnInit {
         // });
     }
 
-    dismissModal() {
-        this.modalController.dismiss();
+    dismissModal($event = null) {
+        if (!$event || ($event.target.className === 'modal-page' || $event.target.localName === 'ion-toolbar')) {
+            this.modalController.dismiss();
+        }
     }
 
     //Set favorite as source

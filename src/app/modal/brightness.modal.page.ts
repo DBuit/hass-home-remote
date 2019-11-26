@@ -48,8 +48,10 @@ export class BrightnessModalPage implements OnInit {
         });
     }
 
-    dismissModal() {
-        this.modalController.dismiss();
+    dismissModal($event = null) {
+        if (!$event || ($event.target.className === 'modal-page' || $event.target.localName === 'ion-toolbar')) {
+            this.modalController.dismiss();
+        }
     }
 
     createRange(amount) {
