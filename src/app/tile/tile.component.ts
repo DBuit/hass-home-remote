@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {callService} from "home-assistant-js-websocket";
-import {BrightnessModalPage} from "../modal/brightness.modal.page";
-import {SwitchModalPage} from "../modal/switch.modal.page";
-import {ModalController} from "@ionic/angular";
+import {callService} from 'home-assistant-js-websocket';
+import {BrightnessModalPage} from '../modal/brightness.modal.page';
+import {SwitchModalPage} from '../modal/switch.modal.page';
+import {ModalController} from '@ionic/angular';
 import {MediaModalPage} from '../modal/media.modal.page';
 
 @Component({
@@ -46,23 +46,23 @@ export class TileComponent implements OnInit, OnChanges {
 
   toggle(entity) {
     console.log('tap');
-    callService(this.connection, "homeassistant", "toggle", {
+    callService(this.connection, 'homeassistant', 'toggle', {
       entity_id: entity
     });
   }
 
   calculateTime(lastUpdated) {
-    var currentDate = new Date();
-    var lastDate = new Date(lastUpdated);
+    const currentDate = new Date();
+    const lastDate = new Date(lastUpdated);
 
     console.log(currentDate);
     console.log(lastDate);
 
-    var diffMs = currentDate - lastDate;
-    var diffDays = Math.floor(diffMs / 86400000); // days
-    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
-    var diffSecs = Math.round((((diffMs % 86400000) % 3600000) % 60000) / 1000);
+    const diffMs = currentDate.getTime() - lastDate.getTime();
+    const diffDays = Math.floor(diffMs / 86400000); // days
+    const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+    const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+    const diffSecs = Math.round((((diffMs % 86400000) % 3600000) % 60000) / 1000);
     console.log(diffDays);
     console.log(diffHrs);
     console.log(diffMins);
@@ -79,40 +79,40 @@ export class TileComponent implements OnInit, OnChanges {
     }
   }
 
-  async brightnessModal(entity) {
+  async brightnessModal(entity: any) {
     const modal = await this.modalController.create({
       component: BrightnessModalPage,
       cssClass: 'custom-modal-css',
       componentProps: {
-        'entity': entity,
-        'entityData': this.entityData,
-        'connection': this.connection
+        entity: entity,
+        entityData: this.entityData,
+        connection: this.connection
       }
     });
     await modal.present();
   }
 
-  async switchModal(entity) {
+  async switchModal(entity: any) {
     const modal = await this.modalController.create({
       component: SwitchModalPage,
       cssClass: 'custom-modal-css',
       componentProps: {
-        'entity': entity,
-        'entityData': this.entityData,
-        'connection': this.connection
+        entity: entity,
+        entityData: this.entityData,
+        connection: this.connection
       }
     });
     await modal.present();
   }
 
-  async mediaModal(entity) {
+  async mediaModal(entity: any) {
     const modal = await this.modalController.create({
       component: MediaModalPage,
       cssClass: 'custom-modal-css',
       componentProps: {
-        'entity': entity,
-        'entityData': this.entityData,
-        'connection': this.connection
+        entity: entity,
+        entityData: this.entityData,
+        connection: this.connection
       }
     });
     await modal.present();
