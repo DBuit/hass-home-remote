@@ -34,8 +34,10 @@ export class SwitchModalPage  {
     }
 
     update(value) {
+        const type = this.entity.entity.split('.')[0];
         this.value = this.valuesReverted[value];
-        callService(this.connection, 'input_boolean', 'toggle', {
+        console.log(type);
+        callService(this.connection, type, 'toggle', {
             entity_id: this.entity.entity
         });
     }

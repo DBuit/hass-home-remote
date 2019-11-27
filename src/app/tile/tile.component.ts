@@ -55,18 +55,11 @@ export class TileComponent implements OnInit, OnChanges {
     const currentDate = new Date();
     const lastDate = new Date(lastUpdated);
 
-    console.log(currentDate);
-    console.log(lastDate);
-
     const diffMs = currentDate.getTime() - lastDate.getTime();
     const diffDays = Math.floor(diffMs / 86400000); // days
     const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
     const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
     const diffSecs = Math.round((((diffMs % 86400000) % 3600000) % 60000) / 1000);
-    console.log(diffDays);
-    console.log(diffHrs);
-    console.log(diffMins);
-    console.log(diffSecs);
 
     if (diffDays > 0) {
       return diffDays + ' days ago';
