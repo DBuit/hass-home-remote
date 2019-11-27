@@ -51,6 +51,34 @@ export class TileComponent implements OnInit, OnChanges {
     });
   }
 
+  calculateTime(lastUpdated) {
+    var currentDate = new Date();
+    var lastDate = new Date(lastUpdated);
+
+    console.log(currentDate);
+    console.log(lastDate);
+
+    var diffMs = currentDate - lastDate;
+    var diffDays = Math.floor(diffMs / 86400000); // days
+    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+    var diffSecs = Math.round((((diffMs % 86400000) % 3600000) % 60000) / 1000);
+    console.log(diffDays);
+    console.log(diffHrs);
+    console.log(diffMins);
+    console.log(diffSecs);
+
+    if (diffDays > 0) {
+      return diffDays + ' days ago';
+    } else if (diffHrs > 0) {
+      return diffHrs + ' hours ago';
+    } else if (diffMins > 0) {
+      return diffMins + ' minutes ago';
+    } else {
+      return diffSecs + ' seconds ago';
+    }
+  }
+
   async brightnessModal(entity) {
     const modal = await this.modalController.create({
       component: BrightnessModalPage,

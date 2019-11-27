@@ -69,6 +69,14 @@
   text-transform: capitalize;
 }
 
+.previous {
+  position: relative;
+  margin-left: 5px;
+  font-size: 9px;
+  color: rgb(134, 134, 134);
+  text-transform: lowercase;
+}
+
 .state.on {
   color: rgba(0, 0, 0, 1);
 }

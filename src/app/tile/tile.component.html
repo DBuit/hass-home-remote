@@ -37,7 +37,13 @@
           <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
         </span>
         <span class="name on">{{ entity.name }}</span>
-        <span class="state on">{{ entityData.state }}<span *ngIf="entityData.attributes.unit_of_measurement">{{ entityData.attributes.unit_of_measurement }}</span></span>
+        <span class="state on">
+          {{ entityData.state }}<span *ngIf="entityData.attributes.unit_of_measurement">{{ entityData.attributes.unit_of_measurement }}</span>
+        
+          <ng-template [ngIf]="entityData.last_changed">
+            <span class="previous">{{ calculateTime(entityData.last_changed) }}</span>
+          </ng-template>
+        </span>
       </div>
     </div>
 
