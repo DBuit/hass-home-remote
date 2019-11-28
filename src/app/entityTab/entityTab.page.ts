@@ -4,7 +4,6 @@ import { subscribeEntities } from "home-assistant-js-websocket";
 import { ModalController } from '@ionic/angular';
 import { WebsocketService } from "../service/websocket.service";
 import { SettingsService } from "../service/settings.service";
-import { copyFile } from 'fs';
 
 @Component({
   selector: 'app-entitytab',
