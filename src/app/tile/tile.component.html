@@ -9,7 +9,7 @@
         <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
       </span>
           <span class="name" [class.on]="entityData.state == 'on'">{{ entity.name }}</span>
-          <span class="state" [class.on]="entityData.state == 'on'">{{ entityData.state }} <span class="value" [class.on]="entityData.state == 'on'"><span *ngIf="entityData.attributes.brightness">{{ math.round(entityData.attributes.brightness / 2.55) }}%</span></span></span>
+          <span class="state" [class.on]="entityData.state == 'on'">{{ entityData.state | translate: 'state':entity.type }} <span class="value" [class.on]="entityData.state == 'on'"><span *ngIf="entityData.attributes.brightness">{{ math.round(entityData.attributes.brightness / 2.55) }}%</span></span></span>
         </div>
       </div>
     </ng-template>
@@ -20,7 +20,7 @@
         <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
       </span>
           <span class="name" [class.on]="entityData.state == 'on'">{{ entity.name }}</span>
-          <span class="state" [class.on]="entityData.state == 'on'">{{ entityData.state }} <span class="value" [class.on]="entityData.state == 'on'"></span></span>
+          <span class="state" [class.on]="entityData.state == 'on'">{{ entityData.state | translate: 'state':entity.type }} <span class="value" [class.on]="entityData.state == 'on'"></span></span>
         </div>
       </div>
     </ng-template>
@@ -28,7 +28,7 @@
 
   </ng-template>
 
-  <ng-template [ngIf]="entity.type == 'sensor'">
+  <ng-template [ngIf]="entity.type == 'sensor' || entity.type == 'binary_sensor'">
 
     <!-- Sensor -->
     <div class="button on">
@@ -38,7 +38,7 @@
         </span>
         <span class="name on">{{ entity.name }}</span>
         <span class="state on">
-          {{ entityData.state }}<span *ngIf="entityData.attributes.unit_of_measurement">{{ entityData.attributes.unit_of_measurement }}</span>
+          {{ entityData.state | translate: 'state':entity.type:entityData.attributes.device_class }}<span *ngIf="entityData.attributes.unit_of_measurement">{{ entityData.attributes.unit_of_measurement }}</span>
         
           <ng-template [ngIf]="entityData.last_changed">
             <span class="previous">{{ calculateTime(entityData.last_changed) }}</span>
@@ -46,10 +46,9 @@
         </span>
       </div>
     </div>
-
   </ng-template>
 
-  <ng-template [ngIf]="entity.type == 'switch'">
+  <ng-template [ngIf]="entity.type == 'switch' || entity.type == 'input_boolean'">
 
     <!-- Switch -->
     <div class="button" [class.on]="entityData.state == 'on'" (click)="hold(entity)">
@@ -58,13 +57,13 @@
           <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
         </span>
         <span class="name" [class.on]="entityData.state == 'on'">{{ entity.name }}</span>
-        <span class="state" [class.on]="entityData.state == 'on'">{{ entityData.state }}</span>
+        <span class="state" [class.on]="entityData.state == 'on'">{{ entityData.state | translate: 'state':entity.type }}</span>
       </div>
     </div>
 
   </ng-template>
 
-  <ng-template [ngIf]="entity.type == 'mediaplayer'">
+  <ng-template [ngIf]="entity.type == 'media_player'">
 
     <!-- Mediaplayer -->
     <div class="button" [class.on]="entityData.state == 'playing'" (click)="hold(entity)" *ngIf="(entity.group && entityData.attributes.sonos_group[0] == entity.entity) || !entity.group">
@@ -83,7 +82,7 @@
             </ng-template>
           </ng-template>
         </span>
-        <span class="state" [class.on]="entityData.state == 'playing'">{{ entityData.state }}</span>
+        <span class="state" [class.on]="entityData.state == 'playing'">{{ entityData.state | translate: 'state':entity.type }}</span>
       </div>
     </div>
 

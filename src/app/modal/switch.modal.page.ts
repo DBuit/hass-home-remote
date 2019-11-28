@@ -34,10 +34,8 @@ export class SwitchModalPage  {
     }
 
     update(value) {
-        const type = this.entity.entity.split('.')[0];
-        this.value = this.valuesReverted[value];
-        console.log(type);
-        callService(this.connection, type, 'toggle', {
+        console.log(this.entity.type);
+        callService(this.connection, this.entity.type, 'toggle', {
             entity_id: this.entity.entity
         });
     }

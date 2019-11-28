@@ -37,9 +37,9 @@ export class TileComponent implements OnInit, OnChanges {
     console.log('hold');
     if (entity.type === 'light') {
       this.brightnessModal(entity);
-    } else if (entity.type === 'switch') {
+    } else if (entity.type === 'switch' || entity.type === 'input_boolean') {
       this.switchModal(entity);
-    } else if (entity.type === 'mediaplayer') {
+    } else if (entity.type === 'media_player') {
       this.mediaModal(entity);
     }
   }

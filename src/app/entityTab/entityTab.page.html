@@ -1,8 +1,32 @@
-<ion-content class="background" >
+<ion-content class="background test" [class.weather-background]="weather && !loading && this.entities" [attr.night]="isNight() ? true: null" [attr.cloudy]="isCloudy() ? true: null">
     <ion-grid>
         <ng-template [ngIf]="home">
             <div class="tabHeader">
                 <h1>{{ title }} <a class="settingsIcon" [routerLink]="['/tabs/settings/tab']"><span class="mdi mdi-settings"></span></a></h1>
+                
+                <ng-template [ngIf]="weather && !loading && this.entities">
+                    <div class="weather" bg="true" fade="true" [attr.night]="isNight() ? true: null">
+                        <img class="icon" [src]="weatherIcon()" />
+                        <div class="weather__info">
+                        <span class="weather__info__title">
+                            {{ entities[weather].attributes.temperature}}
+                            {{ getUnit() }}
+                            {{ entities[weather].friendly_name }}
+                        </span>
+                        <span class="weather__info__state">
+                            {{ entities[weather].state | translate: 'state':'weather' }}
+                        </span>
+                        </div>
+                        <div class="weather__info weather__info--add">
+                        <span  [innerHTML]="renderExtrema(entities[weather].attributes.forecast[0].temperature, entities[weather].attributes.forecast[0].templowh)"></span>
+                        <span *ngIf="this.entities[this.weather].attributes.forecast[0].precipitation">
+                            <div class="weather__icon weather_icon--small" [ngStyle]="{'background-image': 'url(' + this.weatherIcon(this.INFO.precipitation.icon) + ')'}"></div>
+                            <span>{{ this.entities[this.weather].attributes.forecast[0].precipitation }} {{ this.getUnit(this.INFO['precipitation'].unit) }}</span>
+                        </span>
+                        </div>
+                    </div>
+                </ng-template>
+                
                 <ul>
                     <ng-template ngFor let-stat [ngForOf]="homeStats  | keyvalue">
                         <li *ngIf="stat.value">{{stat.value}}</li>

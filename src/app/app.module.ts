@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -25,6 +25,12 @@ import { CameraModalPage } from './modal/camera.modal.page';
 // Screensaver
 import { ScreensaverTimerDirective } from './screensaver-timer.directive';
 
+// Service
+import { TranslateService } from './service/translate.service';
+export function setupTranslateFactory(service: TranslateService) {
+  return () => service.use('nl');
+}
+
 @NgModule({
   declarations: [AppComponent, BrightnessModalPage, BlindModalPage, SwitchModalPage, ScreensaverTimerDirective, MediaModalPage, CameraModalPage, ToastMessageComponent],
   entryComponents: [BrightnessModalPage, BlindModalPage, SwitchModalPage, MediaModalPage, CameraModalPage, ToastMessageComponent],
@@ -35,7 +41,17 @@ import { ScreensaverTimerDirective } from './screensaver-timer.directive';
     BrightnessModalPage,
     BlindModalPage,
     SwitchModalPage,
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+    TranslateService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setupTranslateFactory,
+      deps: [ TranslateService ],
+      multi: true
+    },
+    {
+      provide: RouteReuseStrategy, 
+      useClass: IonicRouteStrategy
+    }
   ],
   bootstrap: [AppComponent]
 })

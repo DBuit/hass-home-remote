@@ -16,6 +16,9 @@ import { TileComponent } from "../tile/tile.component";
 import { BlindsTileComponent } from "../blinds-tile/blinds-tile.component";
 import { CameraTileComponent } from '../camera-tile/camera-tile.component';
 
+// Pipes
+import { TranslatePipe } from '../pipe/translate.pipe';
+
 @NgModule({
   imports: [
     IonicModule,
@@ -23,7 +26,7 @@ import { CameraTileComponent } from '../camera-tile/camera-tile.component';
     FormsModule,
     TabsPageRoutingModule
   ],
-  declarations: [TabsPage, SettingsTabPage, EntityTabPage, TileComponent, BlindsTileComponent, CameraTileComponent],
+  declarations: [TabsPage, SettingsTabPage, EntityTabPage, TileComponent, BlindsTileComponent, CameraTileComponent, TranslatePipe],
   providers: [RedirectGuard]
 })
 export class TabsPageModule {}

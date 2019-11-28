@@ -1,5 +1,12 @@
-ion-content.background{
-  --background: url(../../assets/background-large.jpg) center/cover no-repeat;
+$break-small: 550px;
+ion-content.weather-background {
+  --background: linear-gradient(#45aaf2, transparent 250%);
+}
+ion-content.weather-background[cloudy] {
+  --background: linear-gradient(#4f80a3, transparent 250%);
+}
+ion-content.weather-background[night] {
+  --background: linear-gradient(#16242e 0%, transparent 300%);
 }
 
 .card-title {
@@ -65,4 +72,68 @@ ion-col {
   padding: 4px;
   white-space: nowrap;
   width: 100%;
+}
+
+.weather {
+  position: absolute;
+  right: 30px;
+  top: 50px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: 16px;
+  color: #000;
+  font-weight: 400;
+  @media screen and (max-width: $break-small) { 
+    position:relative;
+    right: initial;
+    top:initial;
+    padding-left:0;
+    padding-top:0;
+  }
+  &[night] {
+    color:#FFF;
+  }
+}
+.weather .icon {
+  height:80px;
+  @media screen and (max-width: $break-small) { 
+    height:60px;
+  }
+}
+.weather__icon {
+  height: 40px;
+  width: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  flex: 0 0 40px;
+  color: white;
+  margin-right: 16px;
+}
+.weather__icon--small {
+  display: inline-block;
+  height: 1em;
+  width: 1em;
+  flex: initial;
+  margin: 0 .4em;
+}
+.weather__info {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  min-height: 42px;
+  min-width: 0;
+}
+.weather__info > span {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.weather__info--add {
+  padding-left: 8px;
+  margin-left: auto;
+  align-items: flex-end;
 }
