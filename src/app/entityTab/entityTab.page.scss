@@ -1,4 +1,7 @@
 $break-small: 550px;
+ion-content.background{
+  --background: url(../../assets/background-large.jpg) center/cover no-repeat;
+}
 ion-content.weather-background {
   --background: linear-gradient(#45aaf2, transparent 250%);
 }

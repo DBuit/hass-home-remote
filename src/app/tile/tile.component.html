@@ -63,6 +63,21 @@
 
   </ng-template>
 
+  <ng-template [ngIf]="entity.type == 'weather'">
+
+    <!-- Weather -->
+    <div class="button on size-2">
+      <div class="button-inner">
+        <span class="icon on">
+          <img [src]="weatherService.weatherIcon(null, entity.entity, entityData.state.toLowerCase())" />
+        </span>
+        <span class="name on">{{ entity.name }}</span>
+        <span class="state on">{{ entityData.state | translate: 'state':entity.type }} <span *ngIf="entityData.attributes.forecast[0] && entityData.attributes.forecast[0].precipitation" class="value on">{{ entityData.attributes.forecast[0].precipitation }} {{ weatherService.getUnit(weatherService.INFO['precipitation'].unit) }}</span></span>
+      </div>
+    </div>
+
+  </ng-template>
+
   <ng-template [ngIf]="entity.type == 'media_player'">
 
     <!-- Mediaplayer -->

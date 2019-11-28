@@ -1,16 +1,16 @@
-<ion-content class="background test" [class.weather-background]="weather && !loading && this.entities" [attr.night]="isNight() ? true: null" [attr.cloudy]="isCloudy() ? true: null">
+<ion-content class="background" [class.weather-background]="weather && !loading && entities" [attr.night]="weather && weatherService.isNight(entities) ? true: null" [attr.cloudy]="weather && weatherService.isCloudy(entities, weather) ? true: null">
     <ion-grid>
         <ng-template [ngIf]="home">
             <div class="tabHeader">
                 <h1>{{ title }} <a class="settingsIcon" [routerLink]="['/tabs/settings/tab']"><span class="mdi mdi-settings"></span></a></h1>
                 
-                <ng-template [ngIf]="weather && !loading && this.entities">
-                    <div class="weather" bg="true" fade="true" [attr.night]="isNight() ? true: null">
-                        <img class="icon" [src]="weatherIcon()" />
+                <ng-template [ngIf]="weather && !loading && entities">
+                    <div class="weather" bg="true" fade="true" [attr.night]="weatherService.isNight(entities) ? true: null">
+                        <img class="icon" [src]="weatherService.weatherIcon(entities, weather)" />
                         <div class="weather__info">
                         <span class="weather__info__title">
                             {{ entities[weather].attributes.temperature}}
-                            {{ getUnit() }}
+                            {{ weatherService.getUnit() }}
                             {{ entities[weather].friendly_name }}
                         </span>
                         <span class="weather__info__state">
@@ -18,10 +18,10 @@
                         </span>
                         </div>
                         <div class="weather__info weather__info--add">
-                        <span  [innerHTML]="renderExtrema(entities[weather].attributes.forecast[0].temperature, entities[weather].attributes.forecast[0].templowh)"></span>
-                        <span *ngIf="this.entities[this.weather].attributes.forecast[0].precipitation">
-                            <div class="weather__icon weather_icon--small" [ngStyle]="{'background-image': 'url(' + this.weatherIcon(this.INFO.precipitation.icon) + ')'}"></div>
-                            <span>{{ this.entities[this.weather].attributes.forecast[0].precipitation }} {{ this.getUnit(this.INFO['precipitation'].unit) }}</span>
+                        <span  [innerHTML]="weatherService.renderExtrema(entities[weather].attributes.forecast[0].temperature, entities[weather].attributes.forecast[0].templowh)"></span>
+                        <span *ngIf="entities[weather].attributes.forecast[0].precipitation">
+                            <div class="weather__icon weather_icon--small" [ngStyle]="{'background-image': 'url(' + weatherService.weatherIcon(entities, weather, weatherService.INFO.precipitation.icon) + ')'}"></div>
+                            <span>{{ entities[weather].attributes.forecast[0].precipitation }} {{ weatherService.getUnit(weatherService.INFO['precipitation'].unit) }}</span>
                         </span>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
             </ion-row>
 
             <ng-template ngFor let-entityrow [ngForOf]="row.entities">
-                <ion-row class="forecast_container" *ngIf="!loading && this.entities">
+                <ion-row class="forecast_container" *ngIf="!loading && entities">
                     <ion-col>
                         <div class="homekit-card">
 

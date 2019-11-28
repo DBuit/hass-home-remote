@@ -26,6 +26,7 @@ import { CameraModalPage } from './modal/camera.modal.page';
 import { ScreensaverTimerDirective } from './screensaver-timer.directive';
 
 // Service
+import { WeatherService } from './service/weather.service';
 import { TranslateService } from './service/translate.service';
 export function setupTranslateFactory(service: TranslateService) {
   return () => service.use('nl');
@@ -41,6 +42,7 @@ export function setupTranslateFactory(service: TranslateService) {
     BrightnessModalPage,
     BlindModalPage,
     SwitchModalPage,
+    WeatherService,
     TranslateService,
     {
       provide: APP_INITIALIZER,

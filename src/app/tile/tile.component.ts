@@ -4,6 +4,7 @@ import {BrightnessModalPage} from '../modal/brightness.modal.page';
 import {SwitchModalPage} from '../modal/switch.modal.page';
 import {ModalController} from '@ionic/angular';
 import {MediaModalPage} from '../modal/media.modal.page';
+import {WeatherService} from '../service/weather.service';
 
 @Component({
   selector: 'tile',
@@ -17,7 +18,7 @@ export class TileComponent implements OnInit, OnChanges {
   @Input() connection: any;
   math = Math;
 
-  constructor(public modalController: ModalController) { }
+  constructor(public modalController: ModalController, public weatherService: WeatherService) { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['entity']) {
