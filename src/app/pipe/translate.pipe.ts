@@ -7,7 +7,7 @@ import { TranslateService } from '../service/translate.service';
 export class TranslatePipe implements PipeTransform {
   constructor(private translate: TranslateService) {}
 
-  transform(key: any, type: any, subType: any, subSubType: any): any {
+  transform(key: any, type: any, subType: any = null, subSubType: any = null): any {
     if (subSubType !== null && subSubType === '') {
       subSubType = 'default';
     }
