@@ -34,7 +34,6 @@ export class SwitchModalPage  {
     }
 
     update(value) {
-        console.log(this.entity.type);
         callService(this.connection, this.entity.type, 'toggle', {
             entity_id: this.entity.entity
         });

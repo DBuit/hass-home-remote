@@ -1,4 +1,12 @@
 {
+    "hasskit": {
+        "stats": {
+            "light": "lamp is aan",
+            "lights": "lampen zijn aan",
+            "media_player": "speaker is aan",
+            "media_players": "speakers zijn aan"
+        }
+    },
     "attribute": {
         "weather": {
             "humidity": "Vochtigheid",

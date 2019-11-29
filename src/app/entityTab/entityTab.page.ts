@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { WebsocketService } from "../service/websocket.service";
 import { SettingsService } from "../service/settings.service";
 import { WeatherService } from '../service/weather.service';
+import { TranslatePipe } from '../pipe/translate.pipe';
 
 @Component({
   selector: 'app-entitytab',
@@ -29,7 +30,7 @@ export class EntityTabPage {
 
   weather: any = null;
 
-  constructor(public modalController: ModalController, private route: ActivatedRoute, private router: Router, public webSocketService: WebsocketService, public settingsService: SettingsService, public weatherService: WeatherService) {}
+  constructor(public modalController: ModalController, private route: ActivatedRoute, private router: Router, public webSocketService: WebsocketService, public settingsService: SettingsService, public weatherService: WeatherService, private translatePipe: TranslatePipe) {}
 
   async checkSettings() {
     const url = await this.settingsService.get('url');
@@ -75,7 +76,7 @@ export class EntityTabPage {
               countLight++;
             }
             if (countLight > 0) {
-              this.homeStats.light = countLight + ' lights on';
+              this.homeStats.light = countLight + " " + this.translatePipe.transform(countLight > 1 ? "lights" : "light", 'hasskit', 'stats');
             } else {
               this.homeStats.light = null;
             }
@@ -85,7 +86,7 @@ export class EntityTabPage {
               countMediaplayer++;
             }
             if (countMediaplayer > 0) {
-              this.homeStats.media_player = countMediaplayer + ' speakers are on';
+              this.homeStats.media_player = countMediaplayer + " " + this.translatePipe.transform(countMediaplayer > 1 ? "media_players" : "media_player", 'hasskit', 'stats');
             } else {
               this.homeStats.media_player = null;
             }
