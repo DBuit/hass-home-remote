@@ -20,7 +20,7 @@ import { CameraTileComponent } from '../camera-tile/camera-tile.component';
 
 @NgModule({
   imports: [
-    // PipesModule,
+    PipesModule,
     IonicModule,
     CommonModule,
     FormsModule,

@@ -18,12 +18,14 @@ export class SettingsTabPage {
   configurationUrl: string;
   idleEnabled: boolean = true;
   idleTime: number = 20;
+  longTokenEnabled: boolean = false;
 
   constructor(public settingsService: SettingsService, public router: Router, public toastController: ToastController, private http: HttpClient, public loadingController: LoadingController) { }
 
   async ngOnInit() {
     this.url = await this.settingsService.get('url');
     this.token = await this.settingsService.get('token');
+    this.longTokenEnabled = await this.settingsService.get('longTokenEnabled');
     this.configuration = await this.settingsService.get('configuration');
     this.configurationUrl = await this.settingsService.get('configurationUrl');
     this.idleEnabled = await this.settingsService.get('idleEnabled');
@@ -39,9 +41,10 @@ export class SettingsTabPage {
       await loading.present();
       await this.settingsService.set('url', this.url);
       await this.settingsService.set('token', this.token);
+      await this.settingsService.set('longTokenEnabled', this.longTokenEnabled);
       await this.settingsService.set('configurationUrl', this.configurationUrl);
       await this.settingsService.set('idleEnabled', this.idleEnabled);
-    await this.settingsService.set('idleTime', this.idleTime);
+      await this.settingsService.set('idleTime', this.idleTime);
 
       const toast = await this.toastController.create({
         message: 'Settings saved.',
@@ -52,27 +55,28 @@ export class SettingsTabPage {
   }
 
   async getConfiguration() {
-
-    if(this.configurationUrl) {
-      //GET JSON from url
-      let loading = await this.loadingController.create({
-        message: 'Downloading configuration file...'
-      });
-      await loading.present();
-      this.download(this.configurationUrl).subscribe((data: any) => {
-        this.configuration = data;
-        this.settingsService.set('configuration', this.configuration);
-        this.configurationString = JSON.stringify(this.configuration, undefined, 4);
-        loading.dismiss();
-        this.toast('Configuration saved');
-
-      }, (error) => {
-        loading.dismiss();
-        this.toast('Error retrieving configuration: '+error.message);
-      });
+    let downloadUrl = 'https://cors-anywhere.herokuapp.com/'+this.url+'/local/home_remote/configuration.json';
+    if(!this.configurationUrl) {
+      this.toast('Download configuration from default path /local/home_remote/configuration.json');
     } else {
-      this.toast('No configuration url saved');
+      downloadUrl = this.configurationUrl;
     }
+    //GET JSON from url
+    let loading = await this.loadingController.create({
+      message: 'Downloading configuration file...'
+    });
+    await loading.present();  
+    this.download(downloadUrl).subscribe((data: any) => {
+      this.configuration = data;
+      this.settingsService.set('configuration', this.configuration);
+      this.configurationString = JSON.stringify(this.configuration, undefined, 4);
+      loading.dismiss();
+      this.toast('Configuration saved');
+
+    }, (error) => {
+      loading.dismiss();
+      this.toast('Error retrieving configuration: '+error.message);
+    });
   }
 
   download(url) {

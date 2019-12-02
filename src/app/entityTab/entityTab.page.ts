@@ -35,7 +35,8 @@ export class EntityTabPage {
   async checkSettings() {
     const url = await this.settingsService.get('url');
     const token = await this.settingsService.get('token');
-    return !(!url || !token);
+    const longTokenEnabled = await this.settingsService.get('longTokenEnabled');
+    return !(!url || (!token && longTokenEnabled !== false));
   }
 
   async ngOnInit() {

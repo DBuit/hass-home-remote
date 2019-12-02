@@ -17,6 +17,11 @@
           <ion-input required type="text" name="url" [(ngModel)]="url"></ion-input>
         </ion-item>
 
+
+        <ion-item>
+          <ion-label>Enable long lived token</ion-label>
+          <ion-checkbox slot="start" name="longTokenEnabled" [(ngModel)]="longTokenEnabled"></ion-checkbox>
+        </ion-item>
         <ion-item>
           <ion-label position="stacked">Long lived token <ion-text color="danger">*</ion-text></ion-label>
           <ion-input required type="text" name="token" [(ngModel)]="token"></ion-input>
@@ -38,7 +43,7 @@
         </ion-item>
 
         <div class="ion-padding">
-          <ion-button expand="block" type="button" class="ion-no-margin" (click)="getConfiguration()">download/update json configuration</ion-button>
+          <ion-button expand="block" type="button" class="ion-no-margin" (click)="getConfiguration()">download/update json configuration (Leave empty to download from: /local/home_remote/configuration.json)</ion-button>
         </div>
       </ion-list>
 

@@ -5,20 +5,17 @@ import {
     ERR_INVALID_AUTH,
     ERR_CANNOT_CONNECT,
     ERR_HASS_HOST_REQUIRED
-} from "home-assistant-js-websocket";
-import { ConnectionOptions, Error } from "home-assistant-js-websocket";
-import * as messages from "./messages";
+} from 'home-assistant-js-websocket';
+import { ConnectionOptions, Error } from 'home-assistant-js-websocket';
+import * as messages from './messages';
 
 const DEBUG = true;
 
-const MSG_TYPE_AUTH_REQUIRED = "auth_required";
-const MSG_TYPE_AUTH_INVALID = "auth_invalid";
-const MSG_TYPE_AUTH_OK = "auth_ok";
+const MSG_TYPE_AUTH_REQUIRED = 'auth_required';
+const MSG_TYPE_AUTH_INVALID = 'auth_invalid';
+const MSG_TYPE_AUTH_OK = 'auth_ok';
 
 export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
-
-    console.log('customsocket options:');
-    console.log(options);
 
     if (!options.auth) {
         throw ERR_HASS_HOST_REQUIRED;
@@ -39,10 +36,10 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
         : undefined;
 
     // Convert from http:// -> ws://, https:// -> wss://
-    const url = "ws" + auth.data.hassUrl.substr(4) + "/api/websocket";
+    const url = 'ws' + auth.data.hassUrl.substr(4) + '/api/websocket';
 
     if (DEBUG) {
-        console.log("[Auth phase] Initializing", url);
+        console.log('[Auth phase] Initializing', url);
         // alert("[Auth phase] Initializing "+ url);
     }
 
@@ -52,7 +49,7 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
         promReject: (err: Error) => void
     ) {
         if (DEBUG) {
-            console.log("[Auth Phase] New connection", url);
+            console.log('[Auth Phase] New connection', url);
             // alert("[Auth Phase] New connection "+ url);
         }
 
@@ -63,7 +60,7 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
 
         const closeMessage = () => {
             // If we are in error handler make sure close handler doesn't also fire.
-            socket.removeEventListener("close", closeMessage);
+            socket.removeEventListener('close', closeMessage);
             if (invalidAuth) {
                 promReject(ERR_INVALID_AUTH);
                 return;
@@ -108,7 +105,7 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
             const message = JSON.parse(event.data);
 
             if (DEBUG) {
-                console.log("[Auth phase] Received", JSON.stringify(message));
+                console.log('[Auth phase] Received', JSON.stringify(message));
                 //alert("[Auth phase] Received "+ JSON.stringify(message));
             }
             switch (message.type) {
@@ -118,10 +115,10 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
                     break;
 
                 case MSG_TYPE_AUTH_OK:
-                    socket.removeEventListener("open", handleOpen);
-                    socket.removeEventListener("message", handleMessage);
-                    socket.removeEventListener("close", closeMessage);
-                    socket.removeEventListener("error", closeMessage);
+                    socket.removeEventListener('open', handleOpen);
+                    socket.removeEventListener('message', handleMessage);
+                    socket.removeEventListener('close', closeMessage);
+                    socket.removeEventListener('error', closeMessage);
                     promResolve(socket);
                     break;
 
@@ -129,17 +126,17 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
                     if (DEBUG) {
                         // We already send this message when socket opens
                         if (message.type !== MSG_TYPE_AUTH_REQUIRED) {
-                            console.warn("[Auth phase] Unhandled message", JSON.stringify(message));
+                            console.warn('[Auth phase] Unhandled message', JSON.stringify(message));
                             //alert("[Auth phase] Unhandled message "+ JSON.stringify(message));
                         }
                     }
             }
         };
 
-        socket.addEventListener("open", handleOpen);
-        socket.addEventListener("message", handleMessage);
-        socket.addEventListener("close", closeMessage);
-        socket.addEventListener("error", closeMessage);
+        socket.addEventListener('open', handleOpen);
+        socket.addEventListener('message', handleMessage);
+        socket.addEventListener('close', closeMessage);
+        socket.addEventListener('error', closeMessage);
     }
 
     return new Promise((resolve, reject) =>
