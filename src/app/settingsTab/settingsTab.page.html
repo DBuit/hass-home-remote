@@ -28,7 +28,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">Configuration url <ion-text color="danger">*</ion-text></ion-label>
+          <ion-label position="stacked">Configuration url (Leave empty to download from: /local/home_remote/configuration.json)<ion-text color="danger">*</ion-text></ion-label>
           <ion-input required type="text" name="configurationUrl" [(ngModel)]="configurationUrl"></ion-input>
         </ion-item>
 
@@ -43,7 +43,7 @@
         </ion-item>
 
         <div class="ion-padding">
-          <ion-button expand="block" type="button" class="ion-no-margin" (click)="getConfiguration()">download/update json configuration (Leave empty to download from: /local/home_remote/configuration.json)</ion-button>
+          <ion-button expand="block" type="button" class="ion-no-margin" [disabled]="!url || url.length < 1" (click)="getConfiguration()">download/update json configuration</ion-button>
         </div>
       </ion-list>
 

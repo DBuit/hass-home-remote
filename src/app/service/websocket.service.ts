@@ -1,11 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Auth, ConnectionOptions, Connection, subscribeConfig, getAuth, createConnection } from 'home-assistant-js-websocket';
+// tslint:disable-next-line: max-line-length
+import { Auth, ConnectionOptions, Connection, subscribeConfig, getAuth, createConnection, AuthData } from 'home-assistant-js-websocket';
 import { createSocket } from '../customsocket';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { SettingsService } from './settings.service';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { ToastService } from './toast.service';
+
+
+export function saveTokens(data: AuthData | null): void {
+  const storage = window.localStorage;
+  console.log('Save AuthData');
+  console.log(data);
+  storage.setItem('hassTokens', JSON.stringify(data));
+  console.log('AuthData SAVED!');
+}
+
+export async function loadTokens(): Promise<AuthData | null | undefined> {
+  const storage = window.localStorage;
+  console.log('Get hassTokens!!');
+  const hassTokens =  storage.getItem('hassTokens');
+  return JSON.parse(hassTokens);
+}
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +37,7 @@ export class WebsocketService {
   pinged = false;
   longTokenEnabled = false;
 
+  // tslint:disable-next-line: max-line-length
   constructor(public loadingController: LoadingController, public settingsService: SettingsService, public router: Router, public toastService: ToastService) {
 
   }
@@ -36,10 +54,8 @@ export class WebsocketService {
 
   async connect() {
     this.toastService.sendToast('Ha connection', 'Please wait...', true, false, 0);
-
-    
     if(this.longTokenEnabled) {
-      let expires = new Date().getTime() + 1e11;
+      const expires = new Date().getTime() + 1e11;
       const defaultConnectionOptions: ConnectionOptions = {
         setupRetry: 10,
         createSocket
@@ -50,7 +66,7 @@ export class WebsocketService {
       );
       connOptions.auth = new Auth({
         access_token: this.token,
-        expires: expires,
+        expires,
         hassUrl: this.url,
         clientId: null,
         refresh_token: null,
@@ -60,7 +76,7 @@ export class WebsocketService {
       const socket = await connOptions.createSocket(connOptions);
       this.connection = await new Connection(socket, connOptions);
     } else {
-      const auth = await getAuth({ hassUrl: this.url });
+      const auth = await getAuth({ hassUrl: this.url, saveTokens: saveTokens, loadTokens: loadTokens});
       const defaultConnectionOptions: ConnectionOptions = {
         setupRetry: 10,
         createSocket
@@ -71,6 +87,7 @@ export class WebsocketService {
       );
       connOptions.auth = auth;
       this.connection = await createConnection(connOptions);
+      console.log(auth);
     }
     this.connection.addEventListener('disconnected', this.reconnecting(this.connection, this));
     this.connection.addEventListener('ready', this.connectionReady(this.connection, this));

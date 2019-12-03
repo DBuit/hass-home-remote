@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '../service/settings.service';
 import { ToastController, LoadingController } from '@ionic/angular';
@@ -9,17 +9,18 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   templateUrl: 'settingsTab.page.html',
   styleUrls: ['settingsTab.page.scss']
 })
-export class SettingsTabPage {
+export class SettingsTabPage implements OnInit {
 
   url: string;
   token: string;
   configuration: object;
   configurationString: string;
   configurationUrl: string;
-  idleEnabled: boolean = true;
-  idleTime: number = 20;
-  longTokenEnabled: boolean = false;
+  idleEnabled = true;
+  idleTime = 20;
+  longTokenEnabled = false;
 
+  // tslint:disable-next-line: max-line-length
   constructor(public settingsService: SettingsService, public router: Router, public toastController: ToastController, private http: HttpClient, public loadingController: LoadingController) { }
 
   async ngOnInit() {
@@ -31,6 +32,15 @@ export class SettingsTabPage {
     this.idleEnabled = await this.settingsService.get('idleEnabled');
     this.idleTime = await this.settingsService.get('idleTime');
     this.configurationString = JSON.stringify(this.configuration, undefined, 4);
+    if (!this.longTokenEnabled) {
+      this.longTokenEnabled = false;
+    }
+    if (!this.idleEnabled) {
+      this.idleEnabled = true;
+    }
+    if (!this.idleTime) {
+      this.idleTime = 20;
+    }
   }
 
 
@@ -39,6 +49,15 @@ export class SettingsTabPage {
         message: 'Saving settings...'
       });
       await loading.present();
+
+
+      console.log(this.url);
+      console.log(this.token);
+      console.log(this.longTokenEnabled);
+      console.log(this.configurationUrl);
+      console.log(this.idleEnabled);
+      console.log(this.idleTime);
+
       await this.settingsService.set('url', this.url);
       await this.settingsService.set('token', this.token);
       await this.settingsService.set('longTokenEnabled', this.longTokenEnabled);
@@ -61,11 +80,11 @@ export class SettingsTabPage {
     } else {
       downloadUrl = this.configurationUrl;
     }
-    //GET JSON from url
+    // GET JSON from url
     let loading = await this.loadingController.create({
       message: 'Downloading configuration file...'
     });
-    await loading.present();  
+    await loading.present();
     this.download(downloadUrl).subscribe((data: any) => {
       this.configuration = data;
       this.settingsService.set('configuration', this.configuration);
@@ -79,7 +98,7 @@ export class SettingsTabPage {
     });
   }
 
-  download(url) {
+  download(url: string) {
     const headerDict = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -90,12 +109,12 @@ export class SettingsTabPage {
       headers: new HttpHeaders(headerDict),
     };
 
-    return this.http.get(url+"?t="+new Date().getTime(), requestOptions);
+    return this.http.get(url + '?t=' + new Date().getTime(), requestOptions);
   }
 
-  async toast(message) {
+  async toast(message: string) {
     const toast = await this.toastController.create({
-      message: message,
+      message,
       duration: 2000
     });
     await toast.present();

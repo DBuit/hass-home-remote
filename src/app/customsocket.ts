@@ -22,6 +22,9 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
     }
     const auth = options.auth;
 
+    console.log(options);
+    console.log(auth);
+
     // Start refreshing expired tokens even before the WS connection is open.
     // We know that we will need auth anyway.
     let authRefreshTask = auth.expired
