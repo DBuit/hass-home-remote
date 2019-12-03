@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { subscribeEntities } from "home-assistant-js-websocket";
+import { subscribeEntities, getStates } from "home-assistant-js-websocket";
 import { ModalController } from '@ionic/angular';
 import { WebsocketService } from "../service/websocket.service";
 import { SettingsService } from "../service/settings.service";
 import { WeatherService } from '../service/weather.service';
 import { TranslatePipe } from '../pipe/translate.pipe';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-entitytab',
@@ -29,6 +30,8 @@ export class EntityTabPage {
   };
 
   weather: any = null;
+  calendar: string;
+  calendarItems: any[] = [];
 
   constructor(public modalController: ModalController, private route: ActivatedRoute, private router: Router, public webSocketService: WebsocketService, public settingsService: SettingsService, public weatherService: WeatherService, private translatePipe: TranslatePipe) {}
 
@@ -55,11 +58,46 @@ export class EntityTabPage {
         } else {
           this. title = this.configuration[this.index].name;
         }
+
+        if (this.configuration[this.index].calendar) {
+          this.calendar = this.configuration[this.index].calendar;
+        }
       }
 
     } else {
       await this.router.navigate(['/tabs/settings/tab']);
     }
+  }
+
+  isToday(calendarItem) {
+    const today = moment();
+    const date = calendarItem.start.dateTime ? calendarItem.start.dateTime : calendarItem.start.date;
+    return moment(date).isSame(today, 'month') && moment(date).isSame(today, 'day') ? true : false;
+  }
+
+
+  renderCalendar() {
+    const startDaysAhead = 0;
+    const maxDaysToShow = 2;
+    const timeOffset = -moment().utcOffset();
+    const start = moment().add(startDaysAhead, 'days').startOf('day').add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
+		const end = moment().add((maxDaysToShow + startDaysAhead), 'days').endOf('day').add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
+    const url = 'calendars/' + this.calendar + '?start=' + start + 'Z&end=' + end + 'Z';
+    
+
+    this.webSocketService.apiCall('GET', url).subscribe((res: any) => {
+      for (const calendarItem of res) {
+        this.calendarItems.push({
+          name: calendarItem.summary,
+          locationShort: calendarItem.location ? calendarItem.location.split(',')[0] : null,
+          location: calendarItem.location ? calendarItem.location : null,
+          date: calendarItem.start.dateTime ? moment(calendarItem.start.dateTime).format('DD MMM') : moment(calendarItem.start.date).format('DD MMM'),
+          startTime: calendarItem.start.dateTime ? moment(calendarItem.start.dateTime).format('LT') : null,
+          endTime: calendarItem.end.dateTime ? moment(calendarItem.end.dateTime).format('LT') : null,
+          today: this.isToday(calendarItem)
+        });
+      }
+    });
   }
 
   async connect() {
@@ -69,6 +107,11 @@ export class EntityTabPage {
     subscribeEntities(this.connection, entities => {
       this.entities = entities;
       if (this.home) {
+
+        if (this.calendar) {
+          this.renderCalendar();
+        }
+
         let countLight = 0;
         let countMediaplayer = 0;
         for (const key in entities) {
@@ -96,12 +139,12 @@ export class EntityTabPage {
         }
 
         this.homeStats.notes = [];
-        for(const note of this.configuration[this.index].notes) {
-          //console.log(note);
+        for (const note of this.configuration[this.index].notes) {
+          // console.log(note);
 
-          //console.log(entities[note.entity]);
+          // console.log(entities[note.entity]);
           for (const condition of note.conditions) {
-            //console.log(condition);
+            // console.log(condition);
             let conditionState = false;
             switch (condition.type) {
               case 'contains': {
@@ -111,13 +154,13 @@ export class EntityTabPage {
                 break;
               }
               case 'equals': {
-                if (entities[note.entity].state.toLowerCase() == condition.check) {
+                if (entities[note.entity].state.toLowerCase() === condition.check) {
                   conditionState = true;
                 }
                 break;
               }
             }
-            if(conditionState) {
+            if (conditionState) {
               this.homeStats.notes.push(condition.message);
             }
           }

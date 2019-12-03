@@ -32,13 +32,18 @@ export class SettingsTabPage implements OnInit {
     this.idleEnabled = await this.settingsService.get('idleEnabled');
     this.idleTime = await this.settingsService.get('idleTime');
     this.configurationString = JSON.stringify(this.configuration, undefined, 4);
-    if (!this.longTokenEnabled) {
+
+    console.log(this.longTokenEnabled);
+    console.log(this.idleEnabled);
+    console.log(this.idleTime);
+
+    if (this.longTokenEnabled !== false && this.longTokenEnabled !== true) {
       this.longTokenEnabled = false;
     }
-    if (!this.idleEnabled) {
+    if (this.idleEnabled !== false && this.idleEnabled !== true) {
       this.idleEnabled = true;
     }
-    if (!this.idleTime) {
+    if (typeof this.idleTime !== 'number') {
       this.idleTime = 20;
     }
   }

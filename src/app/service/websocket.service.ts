@@ -5,9 +5,10 @@ import { createSocket } from '../customsocket';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { SettingsService } from './settings.service';
 import { Router } from '@angular/router';
-import { timer } from 'rxjs';
+import { timer, Observable } from 'rxjs';
 import { ToastService } from './toast.service';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { reject } from 'q';
 
 export function saveTokens(data: AuthData | null): void {
   const storage = window.localStorage;
@@ -38,7 +39,7 @@ export class WebsocketService {
   longTokenEnabled = false;
 
   // tslint:disable-next-line: max-line-length
-  constructor(public loadingController: LoadingController, public settingsService: SettingsService, public router: Router, public toastService: ToastService) {
+  constructor(public loadingController: LoadingController, public settingsService: SettingsService, public router: Router, public toastService: ToastService, private http: HttpClient) {
 
   }
 
@@ -103,7 +104,7 @@ export class WebsocketService {
         console.log('PING');
         this.connection.ping().then(() => {
             this.pinged = false;
-            console.log('PONG!')
+            console.log('PONG!');
         });
 
         this.resetPingTimer();
@@ -134,5 +135,32 @@ export class WebsocketService {
   async connectionReady(connection, data) {
     console.log('Connection has been established again');
     this.toastService.sendToast('Ha connection', 'Connection has been established again', false, true, 2000);
+  }
+
+  apiCall(method: string, url: string) {
+    let bearer = this.token;
+    if (!this.longTokenEnabled) {
+      const hassTokens = JSON.parse(localStorage.getItem('hassTokens'));
+      console.log(hassTokens);
+      if (!hassTokens || !hassTokens.access_token) {
+        return Observable.throw(new Error());
+      }
+      bearer = hassTokens.access_token;
+    }
+
+    const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': 'Bearer ' + bearer,
+          'Content-Type': 'application/json'
+        })
+    };
+
+    console.log(httpOptions);
+
+    // if (method === 'GET') {
+    //   return this.http.get(this.url + '/api/' + url, httpOptions);
+    // }
+    return this.http.get(this.url + '/api/' + url, httpOptions);
+
   }
 }

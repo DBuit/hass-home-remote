@@ -33,6 +33,15 @@
                     </ng-template>
 
                 </ul>
+
+                <ul *ngIf="calendar">
+                    <li *ngFor="let calendarItem of calendarItems">
+                        <strong>{{ calendarItem.today }}</strong><br />
+                        {{ calendarItem.date }}<br />
+                        {{ calendarItem.name }} : {{ calendarItem.startTime }} - {{ calendarItem.endTime }}<br />
+                        {{ calendarItem.locationShort}}
+                    </li>
+                </ul>
             </div>
         </ng-template>
 
