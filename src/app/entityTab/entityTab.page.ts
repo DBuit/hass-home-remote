@@ -7,7 +7,6 @@ import { SettingsService } from "../service/settings.service";
 import { WeatherService } from '../service/weather.service';
 import { TranslatePipe } from '../pipe/translate.pipe';
 import * as moment from 'moment';
-import { TypeOf } from '../functions';
 
 @Component({
   selector: 'app-entitytab',
