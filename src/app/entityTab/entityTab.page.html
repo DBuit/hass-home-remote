@@ -29,19 +29,42 @@
                 
                 <ul>
                     <ng-template ngFor let-stat [ngForOf]="homeStats  | keyvalue">
-                        <li *ngIf="stat.value">{{stat.value}}</li>
+                        <ng-template [ngIf]="typeOf(stat.value) !== 'object'">
+                            <ng-template [ngIf]="typeOf(stat.value) !== 'object'">
+                                <li *ngIf="stat.value">{{stat.value}}</li>
+                            </ng-template>
+                        </ng-template>
+                        <ng-template [ngIf]="typeOf(stat.value) === 'object' && stat.value != null">
+                                <ng-template [ngIf]="stat.value.notes.length > 0 || stat.value.calendar.length > 0">
+                                    <li class="group">
+                                        {{ stat.key | translate: 'hasskit' }}
+                                        <ul class="subItems">
+                                            <ng-template ngFor let-items [ngForOf]="stat.value  | keyvalue">
+                                                <li *ngFor="let item of items.value">
+                                                    <ng-template [ngIf]="typeOf(item) !== 'object'">
+                                                        {{ item }}
+                                                    </ng-template>
+                                                    <ng-template [ngIf]="typeOf(item) === 'object'">
+                                                        {{ item.date }} {{ item.startTime }} - {{ item.endTime }}: {{ item.name }}<ng-template [ngIf]="item.locationShort">, {{ item.locationShort}}</ng-template>
+                                                    </ng-template>
+                                                </li>                         
+                                            </ng-template>
+                                        </ul>   
+                                    </li>
+                                </ng-template>
+                       
+                        </ng-template>
                     </ng-template>
-
                 </ul>
 
-                <ul *ngIf="calendar">
+                <!-- <ul *ngIf="calendar">
                     <li *ngFor="let calendarItem of calendarItems">
                         <strong>{{ calendarItem.today }}</strong><br />
-                        {{ calendarItem.date }}<br />
+                        {{ calendarItem.date }} <br />
                         {{ calendarItem.name }} : {{ calendarItem.startTime }} - {{ calendarItem.endTime }}<br />
                         {{ calendarItem.locationShort}}
                     </li>
-                </ul>
+                </ul> -->
             </div>
         </ng-template>
 

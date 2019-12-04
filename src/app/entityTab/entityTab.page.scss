@@ -26,7 +26,8 @@ ion-grid {
 }
 
 .tabHeader {
-  height: 250px;
+  min-height: 250px;
+  margin-bottom: 30px;
   h1 {
     margin-bottom: 30px;
     margin-left: 4px;
@@ -43,6 +44,10 @@ ion-grid {
       color:#FFF;
       font-size:20px;
       font-weight:300;
+      &.group {
+        margin-top:15px;
+        font-weight:bold;
+      }
     }
   }
 

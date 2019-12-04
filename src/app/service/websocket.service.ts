@@ -5,7 +5,7 @@ import { createSocket } from '../customsocket';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { SettingsService } from './settings.service';
 import { Router } from '@angular/router';
-import { timer, Observable } from 'rxjs';
+import { timer, Observable, throwError } from 'rxjs';
 import { ToastService } from './toast.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { reject } from 'q';
@@ -143,7 +143,7 @@ export class WebsocketService {
       const hassTokens = JSON.parse(localStorage.getItem('hassTokens'));
       console.log(hassTokens);
       if (!hassTokens || !hassTokens.access_token) {
-        return Observable.throw(new Error());
+        return throwError('No token');
       }
       bearer = hassTokens.access_token;
     }
@@ -155,12 +155,6 @@ export class WebsocketService {
         })
     };
 
-    console.log(httpOptions);
-
-    // if (method === 'GET') {
-    //   return this.http.get(this.url + '/api/' + url, httpOptions);
-    // }
     return this.http.get(this.url + '/api/' + url, httpOptions);
-
   }
 }

@@ -7,6 +7,7 @@ import { SettingsService } from "../service/settings.service";
 import { WeatherService } from '../service/weather.service';
 import { TranslatePipe } from '../pipe/translate.pipe';
 import * as moment from 'moment';
+import { TypeOf } from '../functions';
 
 @Component({
   selector: 'app-entitytab',
@@ -26,13 +27,24 @@ export class EntityTabPage {
   homeStats: any = {
     light: null,
     media_player: null,
-    notes: []
+    today: {
+      notes: [],
+      calendar: []
+    },
+    tomorrow: {
+      notes: [],
+      calendar: []
+    },
+    other: {
+      notes: [],
+      calendar: []
+    }
   };
-
   weather: any = null;
   calendar: string;
-  calendarItems: any[] = [];
+  isRenderingCalendar = false;
 
+  // tslint:disable-next-line: max-line-length
   constructor(public modalController: ModalController, private route: ActivatedRoute, private router: Router, public webSocketService: WebsocketService, public settingsService: SettingsService, public weatherService: WeatherService, private translatePipe: TranslatePipe) {}
 
   async checkSettings() {
@@ -77,27 +89,39 @@ export class EntityTabPage {
 
 
   renderCalendar() {
-    const startDaysAhead = 0;
-    const maxDaysToShow = 2;
-    const timeOffset = -moment().utcOffset();
-    const start = moment().add(startDaysAhead, 'days').startOf('day').add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
-		const end = moment().add((maxDaysToShow + startDaysAhead), 'days').endOf('day').add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
-    const url = 'calendars/' + this.calendar + '?start=' + start + 'Z&end=' + end + 'Z';
-    
+    if(!this.isRenderingCalendar) {
+      this.isRenderingCalendar = true;
+      const startDaysAhead = 0;
+      const maxDaysToShow = 2;
+      const timeOffset = -moment().utcOffset();
+      const start = moment().add(startDaysAhead, 'days').startOf('day').add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
+      const end = moment().add((maxDaysToShow + startDaysAhead), 'days').endOf('day').add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
+      const url = 'calendars/' + this.calendar + '?start=' + start + 'Z&end=' + end + 'Z';
 
-    this.webSocketService.apiCall('GET', url).subscribe((res: any) => {
-      for (const calendarItem of res) {
-        this.calendarItems.push({
-          name: calendarItem.summary,
-          locationShort: calendarItem.location ? calendarItem.location.split(',')[0] : null,
-          location: calendarItem.location ? calendarItem.location : null,
-          date: calendarItem.start.dateTime ? moment(calendarItem.start.dateTime).format('DD MMM') : moment(calendarItem.start.date).format('DD MMM'),
-          startTime: calendarItem.start.dateTime ? moment(calendarItem.start.dateTime).format('LT') : null,
-          endTime: calendarItem.end.dateTime ? moment(calendarItem.end.dateTime).format('LT') : null,
-          today: this.isToday(calendarItem)
-        });
-      }
-    });
+      this.webSocketService.apiCall('GET', url).subscribe((res: any) => {
+        this.homeStats.today.calendar = [];
+        this.homeStats.tomorrow.calendar = [];
+        this.homeStats.other.calendar = [];
+        for (const calendarItem of res) {
+          const item = {
+            name: calendarItem.summary,
+            locationShort: calendarItem.location ? calendarItem.location.split(',')[0] : null,
+            location: calendarItem.location ? calendarItem.location : null,
+            date: calendarItem.start.dateTime ? moment(calendarItem.start.dateTime).format('DD MMM') : moment(calendarItem.start.date).format('DD MMM'),
+            startTime: calendarItem.start.dateTime ? moment(calendarItem.start.dateTime).format('LT') : null,
+            endTime: calendarItem.end.dateTime ? moment(calendarItem.end.dateTime).format('LT') : null,
+            today: this.isToday(calendarItem)
+          };
+
+          if (calendarItem.today) {
+            this.homeStats.today.calendar.push(item);
+          } else {
+            this.homeStats.tomorrow.calendar.push(item);
+          }
+        }
+        this.isRenderingCalendar = false;
+      });
+    }
   }
 
   async connect() {
@@ -107,11 +131,6 @@ export class EntityTabPage {
     subscribeEntities(this.connection, entities => {
       this.entities = entities;
       if (this.home) {
-
-        if (this.calendar) {
-          this.renderCalendar();
-        }
-
         let countLight = 0;
         let countMediaplayer = 0;
         for (const key in entities) {
@@ -135,10 +154,11 @@ export class EntityTabPage {
               this.homeStats.media_player = null;
             }
           }
-
         }
 
-        this.homeStats.notes = [];
+        this.homeStats.today.notes = [];
+        this.homeStats.tomorrow.notes = [];
+        this.homeStats.other.notes = [];
         for (const note of this.configuration[this.index].notes) {
           // console.log(note);
 
@@ -161,11 +181,19 @@ export class EntityTabPage {
               }
             }
             if (conditionState) {
-              this.homeStats.notes.push(condition.message);
+              this.homeStats[condition.list].notes.push(condition.message);
             }
           }
         }
+        console.log(this.homeStats);
+        if (this.calendar) {
+          this.renderCalendar();
+        }
       }
     });
+  }
+
+  typeOf(value: any) {
+      return typeof value;
   }
 }
