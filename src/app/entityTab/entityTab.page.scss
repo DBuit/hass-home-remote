@@ -37,7 +37,7 @@ ion-grid {
   }
   ul {
     margin:0 0 0 4px;
-    padding:0;
+    padding: 0 16px 0 0;
     list-style:none;
     li {
       display:block;
@@ -46,7 +46,26 @@ ion-grid {
       font-weight:300;
       &.group {
         margin-top:15px;
-        font-weight:bold;
+        text-transform: capitalize;
+        > .type {
+          display: block;
+          @media screen and (min-width: $break-small) { 
+            font-weight:500;
+          }
+          @media screen and (max-width: $break-small) { 
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            margin-bottom: 8px;
+            padding-bottom: 2px;
+          }
+        }
+        > ul {
+          margin:0;
+          li {
+            @media screen and (max-width: $break-small) { 
+              font-size:17px;
+            }
+          }
+        }
       }
     }
   }
