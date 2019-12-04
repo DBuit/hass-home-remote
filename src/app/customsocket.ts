@@ -65,6 +65,7 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
             // If we are in error handler make sure close handler doesn't also fire.
             socket.removeEventListener('close', closeMessage);
             if (invalidAuth) {
+                localStorage.removeItem('hassTokens');
                 promReject(ERR_INVALID_AUTH);
                 return;
             }

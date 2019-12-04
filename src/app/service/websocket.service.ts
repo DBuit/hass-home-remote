@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 // tslint:disable-next-line: max-line-length
-import { Auth, ConnectionOptions, Connection, subscribeConfig, getAuth, createConnection, AuthData } from 'home-assistant-js-websocket';
+import { Auth, ConnectionOptions, Connection, getAuth, createConnection, AuthData } from 'home-assistant-js-websocket';
 import { createSocket } from '../customsocket';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { SettingsService } from './settings.service';
-import { Router } from '@angular/router';
-import { timer, Observable, throwError } from 'rxjs';
+import { timer, throwError } from 'rxjs';
 import { ToastService } from './toast.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { reject } from 'q';
 
 export function saveTokens(data: AuthData | null): void {
   const storage = window.localStorage;
@@ -39,7 +38,7 @@ export class WebsocketService {
   longTokenEnabled = false;
 
   // tslint:disable-next-line: max-line-length
-  constructor(public loadingController: LoadingController, public settingsService: SettingsService, public router: Router, public toastService: ToastService, private http: HttpClient) {
+  constructor(public loadingController: LoadingController, public settingsService: SettingsService, public router: Router, public toastService: ToastService, private http: HttpClient, private route: ActivatedRoute) {
 
   }
 
@@ -88,7 +87,13 @@ export class WebsocketService {
       );
       connOptions.auth = auth;
       this.connection = await createConnection(connOptions);
-      console.log(auth);
+
+      // Remove auth redirect url params so this won't break authentication on refresh of page to this url
+      const query = location.search.substr(1);
+      if (query.includes('auth_callback')) {
+        this.router.navigate(['.'], { relativeTo: this.route, queryParams: { } });
+      }
+
     }
     this.connection.addEventListener('disconnected', this.reconnecting(this.connection, this));
     this.connection.addEventListener('ready', this.connectionReady(this.connection, this));

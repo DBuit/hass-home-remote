@@ -7,6 +7,7 @@ import { SettingsService } from "../service/settings.service";
 import { WeatherService } from '../service/weather.service';
 import { TranslatePipe } from '../pipe/translate.pipe';
 import * as moment from 'moment';
+import { ToastService } from '../service/toast.service';
 
 @Component({
   selector: 'app-entitytab',
@@ -44,7 +45,7 @@ export class EntityTabPage {
   isRenderingCalendar = false;
 
   // tslint:disable-next-line: max-line-length
-  constructor(public modalController: ModalController, private route: ActivatedRoute, private router: Router, public webSocketService: WebsocketService, public settingsService: SettingsService, public weatherService: WeatherService, private translatePipe: TranslatePipe) {}
+  constructor(public modalController: ModalController, private route: ActivatedRoute, private router: Router, public webSocketService: WebsocketService, public settingsService: SettingsService, public weatherService: WeatherService, private translatePipe: TranslatePipe, public toastService: ToastService) {}
 
   async checkSettings() {
     const url = await this.settingsService.get('url');
@@ -124,7 +125,11 @@ export class EntityTabPage {
   }
 
   async connect() {
+    try {
     this.connection = await this.webSocketService.getConnection();
+    } catch (e) {
+      this.toastService.sendToast('Ha connection', 'Error making connection', true, false, 0);
+    }
 
     this.loading = false;
     subscribeEntities(this.connection, entities => {
