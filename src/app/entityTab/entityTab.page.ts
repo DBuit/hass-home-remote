@@ -113,7 +113,7 @@ export class EntityTabPage {
             today: this.isToday(calendarItem)
           };
 
-          if (calendarItem.today) {
+          if (item.today) {
             this.homeStats.today.calendar.push(item);
           } else {
             this.homeStats.tomorrow.calendar.push(item);
