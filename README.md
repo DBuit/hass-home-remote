@@ -121,10 +121,6 @@ The first tab / page in the app has a different view.
 To show these things you must add some json to the first tab/page you put in your configuration.json file
 
 ```
-
-
-```
-
 [
     {
 		"name": "Home",
@@ -164,5 +160,5 @@ To show these things you must add some json to the first tab/page you put in you
 	            ]
 		    },
 		],
-    "content": ...... (Here comes the default config)
+    "content": ......(Here comes the default config)
 ```
