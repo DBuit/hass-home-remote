@@ -1,6 +1,8 @@
 # hass-home-remote
 Homekit style webapp for homeassistant to control your home
 
+Quick demo can be found here: https://www.youtube.com/watch?v=Z4MTEIxxOHk
+
 Default the application will download a configuration file in json format from your home assistant url
 You should but a configuration.json file in your /www/home_remote directory.
 
