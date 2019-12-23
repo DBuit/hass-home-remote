@@ -8,7 +8,11 @@
         },
         "today": "vandaag",
         "tomorrow": "morgen",
-        "other": "overig"
+        "other": "overig",
+        "countdown": {
+            "days": "dagen",
+            "year": "jaar"
+        }
     },
     "attribute": {
         "weather": {
