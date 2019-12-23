@@ -130,6 +130,27 @@
     </div>
   </ng-template>
 
+
+  <ng-template [ngIf]="entity.type == 'countdown'">
+
+    <!-- Countdown -->
+    <div class="button on size-2">
+      <div class="button-inner">
+        <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : 'black' }">
+          <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
+        </span>
+        <span class="name on">{{ entity.name }}</span>
+        <span class="state on">
+          {{ entityData.state }}<span *ngIf="entityData.attributes.unit_of_measurement"> {{ entityData.attributes.unit_of_measurement | translate: 'hasskit':entity.type }}</span>
+        
+          <ng-template [ngIf]="entityData.attributes.years > 0">
+            <span class="value on">{{ entityData.attributes.years }} {{ 'year' | translate: 'hasskit':entity.type }}</span>
+          </ng-template>
+        </span>
+      </div>
+    </div>
+  </ng-template>
+
 </ng-template>
 
 <ng-template [ngIf]="!entityData || entityData.state == 'unavailable'">
