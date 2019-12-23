@@ -27,16 +27,23 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
 
     // Start refreshing expired tokens even before the WS connection is open.
     // We know that we will need auth anyway.
-    let authRefreshTask = auth.expired
-        ? auth.refreshAccessToken().then(
+    let authRefreshTask = undefined;
+    console.log(auth.expired);
+    if(auth.expired) {
+        console.log("REFRESH TOKEN 1");
+        console.log(auth.data);
+        auth.refreshAccessToken().then(
             () => {
                 authRefreshTask = undefined;
+                console.log(auth.data);
+                console.log('REFRESH SUCCESS');
             },
             () => {
                 authRefreshTask = undefined;
+                console.log('REFRESH ERROR?');
             }
         )
-        : undefined;
+    }
 
     // Convert from http:// -> ws://, https:// -> wss://
     const url = 'ws' + auth.data.hassUrl.substr(4) + '/api/websocket';
@@ -62,12 +69,41 @@ export function createSocket(options: ConnectionOptions): Promise<WebSocket> {
         let invalidAuth = false;
 
         const closeMessage = () => {
+            console.log('CLOSE MESSAGE');
             // If we are in error handler make sure close handler doesn't also fire.
             socket.removeEventListener('close', closeMessage);
             if (invalidAuth) {
-                localStorage.removeItem('hassTokens');
-                promReject(ERR_INVALID_AUTH);
-                return;
+                // localStorage.removeItem('hassTokens');
+                console.log(triesLeft);
+                if(triesLeft == 0) {
+                    console.log(auth.data);
+                    let authRefreshTask = auth.expired
+                        ? auth.refreshAccessToken().then(
+                            () => {
+                                authRefreshTask = undefined;
+                            },
+                            () => {
+                                authRefreshTask = undefined;
+                            }
+                        )
+                        : undefined;
+                    console.log(authRefreshTask);
+                    console.log('REFRESHED');
+                    console.log(auth.data);
+                    setTimeout(
+                        () => {
+                            console.log('START CONNECT AGAIN');
+                            connect(
+                                newTries,
+                                promResolve,
+                                promReject
+                            )},
+                        1000
+                    );
+                } else {
+                    promReject(ERR_INVALID_AUTH);
+                    return;
+                }
             }
 
             // Reject if we no longer have to retry
