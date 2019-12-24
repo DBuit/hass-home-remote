@@ -3,10 +3,19 @@ Homekit style webapp for homeassistant to control your home
 
 Quick demo can be found here: https://www.youtube.com/watch?v=Z4MTEIxxOHk
 
-Default the application will download a configuration file in json format from your home assistant url
-You should but a configuration.json file in your /www/home_remote directory.
+# Installation
 
-How to make a configuration.json file
+Make a new folder in the www directory and give it a name that you want. This directory will soon be the URL on which you can use the frontend.
+Copy the files from the `dist` folder to this folder. You can now go to [YOUR HASS URL] / local / [FOLDER NAME THAT YOU GAVE IT] to use the front end.
+
+If no configuration has yet been loaded you will go to the settings page in the application. You must create a folder in your www folder and in this folder a file with the name `configuration.json` in this file you will define the pages and entities to be displayed in the application.
+In the applications settingspage you can put the url to the configuration.json file or by default the file is downloaded from the folder `home_remote` so you can use home_remote as the name of the folder.
+
+Now you can set the home assistant url in the settingspage of the application and use the download button to download the configuration to the application. Now use the refresh button and you will see that the bottom bar will be filled with the pages you defined in your configuration you can now switch to your pages and the application will connect to your home assistant. It will redirect to your HASS installation and you need to login to give it authentication, or you can use a long lived token to give it access (this is a setting on the settingspage).
+
+# Configur the configuration.json file
+
+Below you can see an example file of my own. I put comments after the lines to explain what it means and what every line is used for.
 
 ```
 [  //Open an array every object in the array define 1 page on the application
@@ -114,13 +123,14 @@ How to make a configuration.json file
 ]
 ```
 
-The first tab / page in the app has a different view.
+The first tab / page in the frontend can have a different view, it is like a homepage it's the starting point and can show more information than a default page if you want.
 - It can show the weather
-- Show how which entities are on
+- Show how much entities are on/in use
 - Can display today/tomorrows calendar events
-- And you can define custom rules for messages/notes
+- And you can define custom rules for messages/notes (they are a kind of notifications)
 
 To show these things you must add some json to the first tab/page you put in your configuration.json file
+Below is an example and I have commented again.
 
 ```
 [
