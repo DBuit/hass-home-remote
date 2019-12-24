@@ -16,6 +16,9 @@
   &.size-2 {
     width: 226px;
   }
+  &.no-action {
+    cursor: default;
+  }
 }
 
 :host:last-child .button {
