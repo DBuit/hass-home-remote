@@ -31,7 +31,7 @@
   <ng-template [ngIf]="entity.type == 'sensor' || entity.type == 'binary_sensor'">
 
     <!-- Sensor -->
-    <div class="button on">
+    <div class="button on no-action">
       <div class="button-inner">
         <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : 'black' }">
           <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
@@ -134,7 +134,7 @@
   <ng-template [ngIf]="entity.type == 'countdown'">
 
     <!-- Countdown -->
-    <div class="button on size-2">
+    <div class="button on size-2 no-action">
       <div class="button-inner">
         <span class="icon on" [ngStyle]="{'color':entity.color ? entity.color : 'black' }">
           <span *ngIf="entity.icon" class="mdi mdi-{{ entity.icon }}"></span>
@@ -155,7 +155,7 @@
 
 <ng-template [ngIf]="!entityData || entityData.state == 'unavailable'">
   <!-- Unavailable -->
-  <div class="button">
+  <div class="button no-action">
 
     <div class="button-inner">
       <span class="icon">
